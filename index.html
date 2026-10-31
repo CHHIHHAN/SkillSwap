@@ -3,312 +3,492 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>换技 SkillSwap</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<title>会了吗</title>
+<meta name="description" content="会了吗：用你会的，换你想学的。技能互换平台原型。">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%2216%2016%2088%2088%22%3E%3Cpath%20d%3D%22M16%2030a14%2014%200%200%201%2014-14h30v88H30a14%2014%200%200%201-14-14z%22%20fill%3D%22%231CB0F6%22/%3E%3Cpath%20d%3D%22M60%2016h30a14%2014%200%200%201%2014%2014v60a14%2014%200%200%201-14%2014H60z%22%20fill%3D%22%23FF9600%22/%3E%3Cpath%20d%3D%22M60%2019v82%22%20stroke%3D%22%23fff%22%20stroke-width%3D%223.5%22%20stroke-dasharray%3D%225%206%22/%3E%3Ccircle%20cx%3D%2241%22%20cy%3D%2252%22%20r%3D%2213%22%20fill%3D%22%23fff%22/%3E%3Ccircle%20cx%3D%2279%22%20cy%3D%2252%22%20r%3D%2213%22%20fill%3D%22%23fff%22/%3E%3Ccircle%20cx%3D%2243%22%20cy%3D%2254%22%20r%3D%226.5%22%20fill%3D%22%233C3C3C%22/%3E%3Ccircle%20cx%3D%2281%22%20cy%3D%2254%22%20r%3D%226.5%22%20fill%3D%22%233C3C3C%22/%3E%3Cpath%20d%3D%22M48%2076q12%2012%2024%200%22%20stroke%3D%22%233C3C3C%22%20stroke-width%3D%225%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%2216%2016%2088%2088%22%3E%3Cpath%20d%3D%22M16%2030a14%2014%200%200%201%2014-14h30v88H30a14%2014%200%200%201-14-14z%22%20fill%3D%22%231CB0F6%22/%3E%3Cpath%20d%3D%22M60%2016h30a14%2014%200%200%201%2014%2014v60a14%2014%200%200%201-14%2014H60z%22%20fill%3D%22%23FF9600%22/%3E%3Cpath%20d%3D%22M60%2019v82%22%20stroke%3D%22%23fff%22%20stroke-width%3D%223.5%22%20stroke-dasharray%3D%225%206%22/%3E%3Ccircle%20cx%3D%2241%22%20cy%3D%2252%22%20r%3D%2213%22%20fill%3D%22%23fff%22/%3E%3Ccircle%20cx%3D%2279%22%20cy%3D%2252%22%20r%3D%2213%22%20fill%3D%22%23fff%22/%3E%3Ccircle%20cx%3D%2243%22%20cy%3D%2254%22%20r%3D%226.5%22%20fill%3D%22%233C3C3C%22/%3E%3Ccircle%20cx%3D%2281%22%20cy%3D%2254%22%20r%3D%226.5%22%20fill%3D%22%233C3C3C%22/%3E%3Cpath%20d%3D%22M48%2076q12%2012%2024%200%22%20stroke%3D%22%233C3C3C%22%20stroke-width%3D%225%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Noto+Sans+SC:wght@500;700;900&display=swap">
 <style>
-/* Layout: 顶部导航 + 单列内容区；核心视觉是"交换券"——左半蓝色(我能教)、右半琥珀(我想学)，中间打孔线 */
+/* Layout: 左侧导航 | 主内容 | 右侧成就栏；手机端导航变成底部 Tab。风格：明亮、圆角、按钮有"厚底"可按压感 */
 :root{
-  --bg:#F3F4F7; --surface:#FFFFFF; --ink:#161A24; --muted:#5E6577; --line:#DDE0E8;
-  --teach:#2647E8; --teach-soft:#E7ECFF; --learn:#C77A00; --learn-soft:#FFF2D9;
-  --good:#1E8A5A; --good-soft:#E2F5EC; --warn:#B4401C;
-  --sans:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
-  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --bg:#FFFFFF; --surface:#FFFFFF; --ink:#3C3C3C; --muted:#777777; --line:#E5E5E5; --soft:#F7F7F7;
+  --green:#58CC02; --green-d:#58A700; --green-s:#D7FFB8;
+  --blue:#1CB0F6; --blue-d:#1899D6; --blue-s:#DDF4FF;
+  --orange:#FF9600; --orange-d:#CD7900; --orange-s:#FFF0D9;
+  --gold:#FFC800; --gold-d:#E0A800; --red:#FF4B4B; --red-d:#EA2B2B; --purple:#CE82FF;
+  --font:"Nunito","Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#10131A; --surface:#191D27; --ink:#ECEEF4; --muted:#9AA1B3; --line:#2B3142;
-  --teach:#7D93FF; --teach-soft:#1E2550; --learn:#F2B347; --learn-soft:#3A2A0C;
-  --good:#5BD39A; --good-soft:#123426; --warn:#FF8A63; color-scheme:dark}}
+  --bg:#131F24; --surface:#131F24; --ink:#F1F7FB; --muted:#9BA7AD; --line:#37464F; --soft:#1C2B33;
+  --green-s:#1F3A12; --blue-s:#0E3247; --orange-s:#3D2A0E; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#10131A; --surface:#191D27; --ink:#ECEEF4; --muted:#9AA1B3; --line:#2B3142;
-  --teach:#7D93FF; --teach-soft:#1E2550; --learn:#F2B347; --learn-soft:#3A2A0C;
-  --good:#5BD39A; --good-soft:#123426; --warn:#FF8A63; color-scheme:dark}
+  --bg:#131F24; --surface:#131F24; --ink:#F1F7FB; --muted:#9BA7AD; --line:#37464F; --soft:#1C2B33;
+  --green-s:#1F3A12; --blue-s:#0E3247; --orange-s:#3D2A0E; color-scheme:dark}
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
-.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
-header .wrap{display:flex;align-items:center;gap:16px;padding-block:10px;flex-wrap:wrap}
-.logo{font-weight:900;font-size:20px;letter-spacing:.02em;display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink)}
-.logo i{display:inline-flex;font-style:normal}
-.logo i b{width:14px;height:22px;display:block}
-.logo i b:first-child{background:var(--teach);border-radius:4px 0 0 4px}
-.logo i b:last-child{background:var(--learn);border-radius:0 4px 4px 0}
-nav{display:flex;gap:4px;flex-wrap:wrap;flex:1}
-nav a{padding:6px 12px;border-radius:8px;text-decoration:none;color:var(--muted);font-weight:500}
-nav a.on{background:var(--ink);color:var(--surface)}
-nav a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--teach);outline-offset:2px}
-.coin{font-family:var(--mono);font-weight:700;font-size:13px;background:var(--learn-soft);color:var(--learn);padding:5px 10px;border-radius:999px;white-space:nowrap}
-main{padding-block:28px 64px}
-h1,h2,h3{text-wrap:balance;margin:0;line-height:1.3}
-h1{font-size:clamp(24px,4vw,34px);font-weight:900}
-h2{font-size:20px;font-weight:700}
-h3{font-size:16px;font-weight:700}
-.sub{color:var(--muted);margin:6px 0 0;max-width:62ch}
-.eyebrow{font-size:12px;letter-spacing:.12em;color:var(--muted);font-weight:700}
-.stack{display:flex;flex-direction:column;gap:20px}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.55;font-weight:700}
+h1,h2,h3{margin:0;line-height:1.3;text-wrap:balance;font-weight:900}
+h1{font-size:clamp(22px,3.4vw,30px)}
+h2{font-size:21px}
+h3{font-size:17px}
+a{color:var(--blue)}
+p{margin:0}
+.muted{color:var(--muted);font-weight:500}
+.small{font-size:14px}
+
+/* ---------- 外框 ---------- */
+.shell{display:grid;grid-template-columns:240px minmax(0,1fr) 330px;min-height:100vh}
+.side{border-right:2px solid var(--line);padding:24px 16px;padding-left:max(16px,env(safe-area-inset-left,0px));position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:24px}
+.logo{display:flex;align-items:center;gap:8px;font-size:28px;font-weight:900;color:var(--green);text-decoration:none;padding:0 12px;letter-spacing:.02em}
+.logoicon{width:40px;height:40px;flex:none}
+.mobilebar .logoicon{width:32px;height:32px}
+.nav{display:flex;flex-direction:column;gap:6px}
+.nav a{display:flex;align-items:center;gap:14px;padding:10px 14px;border-radius:14px;border:2px solid transparent;text-decoration:none;color:var(--muted);font-weight:900;font-size:15px;letter-spacing:.04em}
+.nav a svg{width:30px;height:30px;flex:none}
+.nav a:hover{background:var(--soft)}
+.nav a.on{background:var(--blue-s);border-color:#84D8FF;color:var(--blue)}
+.main{padding:28px 32px 96px;padding-left:max(32px,env(safe-area-inset-left,0px));padding-right:max(32px,env(safe-area-inset-right,0px));min-width:0}
+.mainin{max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+.rail{padding:24px 24px;padding-right:max(24px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:18px;position:sticky;top:0;height:100vh;overflow:auto}
+.stats{display:flex;gap:6px;justify-content:space-between}
+.stat{display:flex;align-items:center;gap:6px;font-weight:900;padding:6px 10px;border-radius:12px;font-size:16px}
+.stat svg{width:26px;height:26px}
+button.stat{font:inherit;font-weight:900;background:none;border:2px solid transparent;cursor:pointer}
+button.stat:hover{background:var(--blue-s);border-color:#84D8FF}
+.coinhead{display:flex;align-items:center;gap:14px}
+.coinhead .big{display:flex;align-items:center;gap:8px;font-size:34px;font-weight:900;color:var(--blue)}
+.coinhead .big svg{width:40px;height:40px}
+.ways{display:flex;flex-direction:column;gap:12px}
+.way{display:grid;grid-template-columns:48px 1fr;gap:12px;align-items:center;border:2px solid var(--line);border-bottom-width:5px;border-radius:16px;padding:14px}
+.way .tag{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;color:#fff;font-weight:900;font-size:16px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.18)}
+.way .txt{min-width:0}
+.way .txt p{font-size:14px;margin-top:2px}
+.way .act{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.stat.fire{color:var(--orange)} .stat.gem{color:var(--blue)} .stat.heart{color:var(--red)}
+.mobilebar{display:none}
+
+/* ---------- 卡片与按钮 ---------- */
+.box{border:2px solid var(--line);border-radius:16px;padding:18px;background:var(--surface)}
+.box h3{margin-bottom:10px}
+.btn{font:inherit;font-weight:900;font-size:15px;letter-spacing:.06em;border:0;border-radius:14px;padding:12px 18px;cursor:pointer;color:#fff;background:var(--green);box-shadow:0 4px 0 var(--green-d);transition:transform .05s,box-shadow .05s;text-transform:uppercase;white-space:nowrap}
+.btn:active{transform:translateY(4px);box-shadow:0 0 0 var(--green-d)}
+.btn.blue{background:var(--blue);box-shadow:0 4px 0 var(--blue-d)}
+.btn.orange{background:var(--orange);box-shadow:0 4px 0 var(--orange-d)}
+.btn.ghost{background:var(--surface);color:var(--blue);border:2px solid var(--line);box-shadow:0 4px 0 var(--line);padding:10px 16px}
+.btn.sm{padding:8px 14px;font-size:13px}
+.btn.ghost.sm{padding:6px 12px}
+.btn.ghost.learnbtn{color:var(--orange)}
+.btn.wide{width:100%}
+.btn:disabled{background:var(--line);color:var(--muted);box-shadow:0 4px 0 var(--line);cursor:not-allowed;transform:none}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:14px;padding:4px 12px;border-radius:12px;font-weight:800;white-space:nowrap;border:2px solid transparent}
+.chip.t{background:var(--blue-s);color:var(--blue-d)}
+.chip.l{background:var(--orange-s);color:var(--orange-d)}
+.chip.g{background:var(--green-s);color:var(--green-d)}
+.chip.n{background:var(--soft);color:var(--muted);border-color:var(--line)}
+.chip.hit{border-color:currentColor}
+:root:not([data-theme="light"]) .chip.t,:root:not([data-theme="light"]) .chip.l,:root:not([data-theme="light"]) .chip.g{}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .chip.t{color:var(--blue)}:root:not([data-theme="light"]) .chip.l{color:var(--orange)}:root:not([data-theme="light"]) .chip.g{color:var(--green)}}
+:root[data-theme="dark"] .chip.t{color:var(--blue)}:root[data-theme="dark"] .chip.l{color:var(--orange)}:root[data-theme="dark"] .chip.g{color:var(--green)}
+.chip.pick{font:inherit;font-size:14px;font-weight:800;cursor:pointer;border-bottom-width:4px;border-color:currentColor;transition:transform .05s}
+.chip.pick:active{transform:translateY(2px)}
+.chip.pick.off{background:transparent!important;color:var(--muted)!important;border-style:dashed;border-color:var(--line);border-bottom-width:2px;text-decoration:line-through}
+.chip button{background:none;border:0;color:inherit;font:inherit;padding:0 0 0 4px;cursor:pointer;font-size:16px;line-height:1}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
-.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px}
-.chip{display:inline-flex;align-items:center;gap:4px;font-size:13px;padding:2px 10px;border-radius:999px;font-weight:500;white-space:nowrap}
-.chip.t{background:var(--teach-soft);color:var(--teach)}
-.chip.l{background:var(--learn-soft);color:var(--learn)}
-.chip.g{background:var(--good-soft);color:var(--good)}
-.chip.n{background:var(--bg);color:var(--muted);border:1px solid var(--line)}
-.chip.hit{outline:2px solid currentColor}
-button,.btn{font:inherit;font-weight:700;border:0;border-radius:8px;padding:8px 14px;cursor:pointer;background:var(--ink);color:var(--surface)}
-button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
-button.teach{background:var(--teach);color:#fff}
-button.sm{padding:5px 10px;font-size:13px}
-button:disabled{opacity:.45;cursor:not-allowed}
 
-/* Hero ticket */
-.ticket{display:grid;grid-template-columns:1fr 1fr;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
-.ticket>div{padding:20px;min-width:0}
-.ticket .tl{background:var(--teach-soft)}
-.ticket .tr{background:var(--learn-soft);position:relative;border-left:2px dashed var(--line)}
-.ticket .tr::before,.ticket .tr::after{content:"";position:absolute;left:-11px;width:20px;height:20px;border-radius:50%;background:var(--bg)}
-.ticket .tr::before{top:-10px}.ticket .tr::after{bottom:-10px}
-.ticket .lab{font-size:12px;font-weight:700;letter-spacing:.1em}
-.ticket .tl .lab{color:var(--teach)} .ticket .tr .lab{color:var(--learn)}
-.ticket .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+/* ---------- 吉祥物气泡 ---------- */
+.hello{display:flex;gap:16px;align-items:center}
+.hello svg{flex:none;width:96px;height:96px}
+.bubble{position:relative;border:2px solid var(--line);border-radius:16px;padding:14px 18px;min-width:0}
+.bubble::before{content:"";position:absolute;left:-10px;top:50%;width:16px;height:16px;background:var(--surface);border-left:2px solid var(--line);border-bottom:2px solid var(--line);transform:translateY(-50%) rotate(45deg)}
+.bubble p{margin-top:4px}
+@media (prefers-reduced-motion:no-preference){.mascot{animation:bob 2.4s ease-in-out infinite}@keyframes bob{50%{transform:translateY(-4px)}}}
 
-/* tabs */
-.tabs{display:flex;gap:6px;flex-wrap:wrap}
-.tabs button{background:var(--surface);color:var(--muted);border:1px solid var(--line);font-weight:500}
-.tabs button.on{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+/* ---------- 技能卡（我能教 / 我想学）---------- */
+.myskills{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.half{border-radius:16px;padding:16px;border:2px solid;border-bottom-width:5px;min-width:0}
+.half.t{border-color:var(--blue);background:var(--blue-s)}
+.half.l{border-color:var(--orange);background:var(--orange-s)}
+.half .lab{font-size:13px;letter-spacing:.1em;font-weight:900}
+.half.t .lab{color:var(--blue-d)} .half.l .lab{color:var(--orange-d)}
+.half .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.half .chip{background:var(--surface)}
 
-/* user card */
-.ucard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px}
-.ucard.mutual{border-color:var(--good);box-shadow:0 0 0 1px var(--good)}
+/* ---------- 筛选 ---------- */
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg button{font:inherit;font-weight:900;font-size:14px;padding:8px 14px;border-radius:14px;border:2px solid var(--line);border-bottom-width:4px;background:var(--surface);color:var(--muted);cursor:pointer}
+.seg button.on{border-color:var(--blue);color:var(--blue);background:var(--blue-s)}
+
+/* ---------- 用户卡 ---------- */
+.list{display:flex;flex-direction:column;gap:14px}
+.ucard{border:2px solid var(--line);border-bottom-width:5px;border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.ucard.mutual{border-color:var(--green)}
 .uhead{display:flex;gap:12px;align-items:center}
-.ava{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:900;color:#fff;flex:none}
-.uname{font-weight:700}
-.meta{font-size:13px;color:var(--muted)}
-.score{margin-left:auto;text-align:right;font-family:var(--mono)}
-.score b{font-size:22px;display:block;line-height:1}
-.score span{font-size:11px;color:var(--muted)}
-.kv{display:grid;grid-template-columns:52px 1fr;gap:6px 8px;font-size:13px;align-items:start}
-.kv>span:nth-child(odd){color:var(--muted);padding-top:2px}
-.kv>div{display:flex;flex-wrap:wrap;gap:5px;min-width:0}
-.why{font-size:13px;background:var(--bg);border-radius:8px;padding:8px 10px;color:var(--muted)}
-.why b{color:var(--ink)}
-.ufoot{display:flex;gap:8px;align-items:center;margin-top:auto}
+.ava{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-weight:900;color:#fff;font-size:20px;flex:none;box-shadow:inset 0 -4px 0 rgba(0,0,0,.18)}
+.uname{font-weight:900;font-size:17px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.meta{font-size:13px;color:var(--muted);font-weight:700}
+.ring{margin-left:auto;position:relative;width:58px;height:58px;flex:none}
+.ring svg{width:58px;height:58px;transform:rotate(-90deg)}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:16px;font-weight:900}
+.kv{display:grid;grid-template-columns:44px 1fr;gap:8px;align-items:start;font-size:14px}
+.kv>span{color:var(--muted);padding-top:4px}
+.kv>div{display:flex;flex-wrap:wrap;gap:6px;min-width:0}
+.why{background:var(--soft);border-radius:12px;padding:10px 12px;font-size:14px;font-weight:600;color:var(--muted)}
+.why b{color:var(--ink);font-weight:900}
+.ufoot{display:flex;gap:10px;align-items:center}
 .ufoot .meta{margin-right:auto}
 
-/* loop */
-.loop{display:flex;align-items:center;flex-wrap:wrap;gap:6px;font-size:14px}
-.loop .node{font-weight:700;padding:4px 10px;border-radius:8px;background:var(--bg);border:1px solid var(--line)}
-.loop .arr{color:var(--muted);font-size:12px;display:flex;flex-direction:column;align-items:center;line-height:1.2}
-.loop .arr em{font-style:normal;color:var(--teach);font-weight:700}
+/* ---------- 环形交换 ---------- */
+.loop{display:flex;align-items:center;flex-wrap:wrap;gap:6px}
+.loop .node{font-weight:900;padding:6px 12px;border-radius:12px;border:2px solid var(--line);border-bottom-width:4px;background:var(--surface)}
+.loop .node.me{border-color:var(--green);color:var(--green-d)}
+.loop .arr{display:flex;flex-direction:column;align-items:center;font-size:12px;color:var(--muted);line-height:1.1}
+.loop .arr em{font-style:normal;color:var(--blue);font-weight:900}
+.more{display:inline-block;margin-top:14px;font-weight:900;font-size:14px;color:var(--blue);text-decoration:none;letter-spacing:.04em}
+.more:hover{text-decoration:underline}
+.trioseg{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+.trioseg button{font:inherit;font-weight:900;font-size:13px;padding:6px 12px;border-radius:12px;border:2px solid var(--line);border-bottom-width:4px;background:var(--surface);color:var(--muted);cursor:pointer}
+.trioseg button.on{border-color:var(--green);color:var(--green-d);background:var(--green-s)}
+.loop .node.slot{border-style:dashed;color:var(--muted)}
+.team.nofit .loop{opacity:.6}
+.cyc{display:flex;flex-direction:column;gap:12px}
+.cycrow{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;padding-top:12px;border-top:2px solid var(--line)}
+.cycrow:first-child{border-top:0;padding-top:0}
 
-/* forms */
-label.f{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:700}
-input,select,textarea{font:inherit;font-weight:400;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:8px 10px;width:100%}
-.taginput{display:flex;flex-wrap:wrap;gap:6px;border:1px solid var(--line);border-radius:8px;padding:6px;background:var(--surface)}
-.taginput input{border:0;flex:1;min-width:120px;padding:4px}
-.chip button{background:none;color:inherit;padding:0 0 0 2px;font-size:14px;line-height:1}
-.suggest{display:flex;flex-wrap:wrap;gap:6px}
-.suggest button{background:var(--bg);color:var(--muted);border:1px dashed var(--line);font-weight:500;padding:3px 10px;font-size:13px}
+/* ---------- 表单 ---------- */
+label.f{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:900}
+input,select,textarea{font:inherit;font-weight:700;border:2px solid var(--line);background:var(--soft);color:var(--ink);border-radius:12px;padding:10px 12px;width:100%}
+input:focus,select:focus,textarea:focus{border-color:var(--blue);outline:none}
+.addrow{display:flex;gap:8px}
+.addrow input{flex:2;min-width:0}.addrow select{flex:1;min-width:0}
+.suggest{display:flex;flex-wrap:wrap;gap:8px}
+.suggest button{font:inherit;font-weight:800;font-size:14px;padding:6px 12px;border-radius:12px;border:2px dashed var(--line);background:var(--surface);color:var(--muted);cursor:pointer}
+.suggest button:hover{border-color:var(--blue);color:var(--blue)}
 .form2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 
-/* swaps */
-.swap{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
-.status{font-size:12px;font-weight:700;padding:2px 8px;border-radius:6px}
-.st-pending{background:var(--learn-soft);color:var(--learn)}
-.st-active{background:var(--teach-soft);color:var(--teach)}
-.st-done{background:var(--good-soft);color:var(--good)}
-.prog{height:6px;border-radius:3px;background:var(--bg);overflow:hidden;margin-top:6px;max-width:260px}
-.prog i{display:block;height:100%;background:var(--teach)}
+/* ---------- 交换 ---------- */
+.swap{display:flex;flex-direction:column;gap:12px}
+.bar{height:16px;border-radius:8px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--green);border-radius:8px;position:relative;transition:width .4s}
+.bar i::after{content:"";position:absolute;left:8px;right:8px;top:4px;height:4px;border-radius:2px;background:rgba(255,255,255,.35)}
+.status{font-size:12px;font-weight:900;padding:2px 8px;border-radius:8px;letter-spacing:.04em}
+.st-pending{background:var(--orange-s);color:var(--orange-d)}
+.st-active{background:var(--blue-s);color:var(--blue-d)}
+.st-done{background:var(--green-s);color:var(--green-d)}
 table{width:100%;border-collapse:collapse;font-size:14px}
-td,th{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left}
-th{color:var(--muted);font-weight:500;font-size:12px}
-.num{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right}
+td,th{padding:10px 6px;border-bottom:2px solid var(--line);text-align:left}
+th{color:var(--muted);font-size:12px;letter-spacing:.08em}
+.num{font-variant-numeric:tabular-nums;text-align:right;font-weight:900}
 .tblwrap{overflow-x:auto}
+.stars{display:flex;gap:2px}
+.stars button{background:none;border:0;cursor:pointer;color:var(--gold);font-size:26px;padding:0 2px;line-height:1}
+.empty{text-align:center;padding:28px 16px;border:2px dashed var(--line);border-radius:16px;color:var(--muted)}
+.empty svg{width:90px;height:90px;margin-bottom:8px}
 
-/* about */
-.pain{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-.pain .panel p{margin:6px 0 0;color:var(--muted);font-size:14px}
-.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;counter-reset:s}
-.flow div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;font-size:14px;counter-increment:s}
-.flow div::before{content:"0" counter(s);font-family:var(--mono);color:var(--teach);font-weight:700;display:block;font-size:12px}
-.mech{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
-.mech .panel p{margin:6px 0 0;font-size:14px;color:var(--muted)}
-.mech code{font-family:var(--mono);font-size:12px;background:var(--bg);padding:1px 5px;border-radius:4px;color:var(--ink)}
+/* ---------- 右侧栏 ---------- */
 
-/* modal */
-.scrim{position:fixed;inset:0;background:rgba(10,12,20,.5);display:grid;place-items:center;z-index:20;padding:16px}
-.modal{background:var(--surface);border-radius:14px;max-width:520px;width:100%;padding:22px;max-height:90vh;overflow:auto;display:flex;flex-direction:column;gap:14px}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--surface);padding:10px 16px;border-radius:10px;z-index:30;font-weight:500;max-width:calc(100% - 32px)}
-.empty{color:var(--muted);text-align:center;padding:28px;border:1px dashed var(--line);border-radius:12px}
-.stars button{background:none;color:var(--learn);font-size:22px;padding:0 2px}
-.note{font-size:12px;color:var(--muted)}
-@media (max-width:640px){
-  .ticket,.form2{grid-template-columns:1fr}
-  .ticket .tr{border-left:0;border-top:2px dashed var(--line)}
-  .ticket .tr::before,.ticket .tr::after{display:none}
-  .swap{grid-template-columns:1fr}
+.goal .bar{margin-top:10px}
+.hotm{display:none}
+@media (max-width:960px){.hotm{display:block}}
+.hot{display:flex;flex-direction:column;gap:2px}
+.hot>div{display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 6px;border-radius:12px}
+.hot>div:hover{background:var(--soft)}
+.hot .rk{font-weight:900;color:var(--muted);text-align:center}
+.hot .rk.top{color:var(--orange)}
+.hot b{font-weight:900}
+.lb{display:flex;flex-direction:column;gap:2px}
+.lb div{display:grid;grid-template-columns:24px 36px 1fr auto;gap:8px;align-items:center;padding:6px 8px;border-radius:12px;font-size:14px}
+.lb div.me{background:var(--green-s)}
+.lb .ava{width:32px;height:32px;font-size:13px;box-shadow:none}
+.lb .rk{font-weight:900;color:var(--muted);text-align:center}
+.lb .rk.top{color:var(--gold-d)}
+
+/* ---------- 产品说明 ---------- */
+.pain{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pain .box p{margin-top:6px;font-size:14px}
+.steps{display:flex;flex-direction:column;gap:0}
+.step{display:grid;grid-template-columns:48px 1fr;gap:14px;align-items:start;padding-bottom:18px;position:relative}
+.step:not(:last-child)::before{content:"";position:absolute;left:23px;top:48px;bottom:0;width:4px;background:var(--line);border-radius:2px}
+.step .dot{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:900;font-size:18px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.2)}
+.step p{font-size:14px;margin-top:2px}
+.mech{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mech p{font-size:14px;margin-top:6px}
+.mech code{font-family:ui-monospace,Menlo,monospace;background:var(--soft);padding:1px 6px;border-radius:6px;color:var(--ink)}
+
+/* ---------- 弹窗 / 提示 ---------- */
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.45);display:grid;place-items:center;z-index:40;padding:16px}
+.modal{background:var(--surface);border:2px solid var(--line);border-radius:20px;max-width:500px;width:100%;padding:22px;max-height:90vh;overflow:auto;display:flex;flex-direction:column;gap:14px}
+.notebox{background:var(--green-s);color:var(--green-d);border-radius:12px;padding:10px 12px;font-size:14px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .notebox{color:var(--green)}}
+:root[data-theme="dark"] .notebox{color:var(--green)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(24px + env(safe-area-inset-bottom,0px));z-index:50;background:var(--green-s);color:var(--green-d);border:2px solid var(--green);padding:12px 18px;border-radius:16px;font-weight:900;max-width:calc(100% - 32px);box-shadow:0 4px 0 var(--green-d)}
+.toast.bad{background:#FFDFE0;color:var(--red-d);border-color:var(--red);box-shadow:0 4px 0 var(--red-d)}
+.foot{font-size:13px;color:var(--muted);font-weight:500}
+
+/* ---------- 响应式 ---------- */
+@media (max-width:1180px){
+  .shell{grid-template-columns:96px minmax(0,1fr) 300px}
+  .side .logo span,.nav a span{display:none}
+  .nav a{justify-content:center;padding:10px}
+  .logo{justify-content:center;padding:0}
 }
-@media (prefers-reduced-motion:no-preference){.ucard{transition:transform .15s}.ucard:hover{transform:translateY(-2px)}}
+@media (max-width:960px){
+  .shell{grid-template-columns:96px minmax(0,1fr)}
+  .rail{display:none}
+  .mobilebar{display:flex;position:sticky;top:0;z-index:20;background:var(--surface);border-bottom:2px solid var(--line);padding:10px 16px;padding-top:calc(10px + env(safe-area-inset-top,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));justify-content:space-between;align-items:center}
+  .mobilebar .logo{font-size:22px}
+  .mobilebar .stats{gap:2px}
+  .mobilebar .stat{padding:4px 6px;font-size:15px}
+  .mobilebar .stat svg{width:22px;height:22px}
+  .side .logo{display:none}
+}
+@media (max-width:640px){
+  .shell{display:block}
+  .side{position:fixed;bottom:0;left:0;right:0;top:auto;height:auto;flex-direction:row;padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px));border-right:0;border-top:2px solid var(--line);background:var(--surface);z-index:20}
+  .nav{flex-direction:row;justify-content:space-around;width:100%}
+  .main{padding:20px 16px 110px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .myskills,.form2,.pain,.mech{grid-template-columns:1fr}
+  .hello svg{width:72px;height:72px}
+}
 </style>
-
 </head>
 <body>
-<header><div class="wrap">
-  <a class="logo" href="#discover"><i><b></b><b></b></i>换技</a>
-  <nav id="nav">
-    <a href="#discover">发现匹配</a>
-    <a href="#post">发布技能</a>
-    <a href="#swaps">我的交换</a>
-    <a href="#about">产品设计</a>
-  </nav>
-  <span class="coin" id="coin">⏱ 2 时间币</span>
-</div></header>
-<main class="wrap" id="app"></main>
+<div class="mobilebar">
+  <a class="logo" href="#discover"><svg class="logoicon" viewBox="0 0 120 120" aria-hidden="true"><path d="M16 30a14 14 0 0 1 14-14h30v88H30a14 14 0 0 1-14-14z" fill="#1CB0F6"/><path d="M60 16h30a14 14 0 0 1 14 14v60a14 14 0 0 1-14 14H60z" fill="#FF9600"/><path d="M60 19v82" stroke="#fff" stroke-width="3.5" stroke-dasharray="5 6"/><circle cx="41" cy="52" r="13" fill="#fff"/><circle cx="79" cy="52" r="13" fill="#fff"/><circle cx="43" cy="54" r="6.5" fill="#3C3C3C"/><circle cx="81" cy="54" r="6.5" fill="#3C3C3C"/><path d="M48 76q12 12 24 0" stroke="#3C3C3C" stroke-width="5" fill="none" stroke-linecap="round"/></svg>会了吗</a>
+  <div class="stats" id="statsM"></div>
+</div>
+<div class="shell">
+  <aside class="side">
+    <a class="logo" href="#discover"><svg class="logoicon" viewBox="0 0 120 120" aria-hidden="true"><path d="M16 30a14 14 0 0 1 14-14h30v88H30a14 14 0 0 1-14-14z" fill="#1CB0F6"/><path d="M60 16h30a14 14 0 0 1 14 14v60a14 14 0 0 1-14 14H60z" fill="#FF9600"/><path d="M60 19v82" stroke="#fff" stroke-width="3.5" stroke-dasharray="5 6"/><circle cx="41" cy="52" r="13" fill="#fff"/><circle cx="79" cy="52" r="13" fill="#fff"/><circle cx="43" cy="54" r="6.5" fill="#3C3C3C"/><circle cx="81" cy="54" r="6.5" fill="#3C3C3C"/><path d="M48 76q12 12 24 0" stroke="#3C3C3C" stroke-width="5" fill="none" stroke-linecap="round"/></svg><span>会了吗</span></a>
+    <nav class="nav" id="nav">
+      <a href="#discover"><svg viewBox="0 0 32 32"><path d="M5 14 16 5l11 9v12a2 2 0 0 1-2 2h-6v-8h-6v8H7a2 2 0 0 1-2-2z" fill="#FF9600"/><path d="M13 20h6v8h-6z" fill="#CD7900"/></svg><span>发现匹配</span></a>
+      <a href="#post"><svg viewBox="0 0 32 32"><rect x="4" y="6" width="12" height="20" rx="4" fill="#1CB0F6"/><rect x="16" y="6" width="12" height="20" rx="4" fill="#FF9600"/><path d="M16 8v16" stroke="#fff" stroke-width="2" stroke-dasharray="2 3"/></svg><span>我的技能卡</span></a>
+      <a href="#swaps"><svg viewBox="0 0 32 32"><path d="M6 12h17l-4-4M26 20H9l4 4" fill="none" stroke="#58CC02" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>我的交换</span></a>
+      <a href="#about"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="#CE82FF"/><rect x="14" y="14" width="4" height="10" rx="2" fill="#fff"/><circle cx="16" cy="9.5" r="2.3" fill="#fff"/></svg><span>产品设计</span></a>
+    </nav>
+  </aside>
+  <main class="main"><div class="mainin" id="app"></div></main>
+  <aside class="rail" id="rail"></aside>
+</div>
 <div id="layer"></div>
 
 <script>
 const SEED_USERS=[
- {id:'u1',name:'林晓',city:'上海',mode:'线上/线下',teach:[{s:'吉他',lv:'精通'},{s:'乐理',lv:'熟练'}],want:['Python','摄影'],rate:4.9,n:23,time:'工作日晚',bio:'乐队主音吉他手 8 年，想做个人网站展示作品'},
- {id:'u2',name:'Kenji',city:'线上',mode:'线上',teach:[{s:'日语',lv:'母语'}],want:['摄影','视频剪辑'],rate:4.8,n:15,time:'周末',bio:'东京人，在上海工作，想拍好街头照片'},
- {id:'u3',name:'周一然',city:'上海',mode:'线下',teach:[{s:'游泳',lv:'教练证'},{s:'健身',lv:'熟练'}],want:['吉他'],rate:5.0,n:31,time:'周末上午',bio:'游泳教练，一直想学弹唱'},
- {id:'u4',name:'Maya',city:'杭州',mode:'线上',teach:[{s:'英语口语',lv:'母语'},{s:'雅思写作',lv:'熟练'}],want:['中文','书法'],rate:4.7,n:42,time:'工作日晚',bio:'在杭州教书的加拿大人'},
- {id:'u5',name:'陈默',city:'上海',mode:'线上/线下',teach:[{s:'Figma',lv:'精通'},{s:'UI设计',lv:'精通'}],want:['日语','Python'],rate:4.9,n:18,time:'周末',bio:'产品设计师，明年想去日本交换'},
- {id:'u6',name:'阿蓓',city:'北京',mode:'线上',teach:[{s:'视频剪辑',lv:'精通'},{s:'Premiere',lv:'精通'}],want:['吉他','英语口语'],rate:4.6,n:9,time:'工作日晚',bio:'B站 UP 主，剪辑 5 年'},
- {id:'u7',name:'王拓',city:'上海',mode:'线下',teach:[{s:'书法',lv:'熟练'},{s:'国画',lv:'入门可教'}],want:['健身','摄影'],rate:4.8,n:12,time:'周末下午',bio:'练字二十年，久坐想动起来'},
- {id:'u8',name:'Sora',city:'线上',mode:'线上',teach:[{s:'数据分析',lv:'精通'},{s:'Excel',lv:'精通'}],want:['UI设计','Figma'],rate:4.5,n:6,time:'随时',bio:'分析师，想转产品'},
- {id:'u9',name:'许诺',city:'上海',mode:'线上/线下',teach:[{s:'烘焙',lv:'熟练'},{s:'咖啡拉花',lv:'熟练'}],want:['日语','视频剪辑'],rate:4.9,n:27,time:'工作日下午',bio:'开了一家小咖啡店，想做探店视频'},
- {id:'u10',name:'Leo',city:'深圳',mode:'线上',teach:[{s:'Python',lv:'精通'},{s:'爬虫',lv:'熟练'}],want:['英语口语','吉他'],rate:4.7,n:20,time:'周末',bio:'后端工程师，准备出国面试'}
+ {id:'u1',name:'林晓',city:'上海',mode:'线上/线下',teach:[{s:'吉他',lv:'精通'},{s:'乐理',lv:'熟练'}],want:['Python','摄影','荒野求生'],rate:4.9,n:23,time:'工作日晚'},
+ {id:'u2',name:'Kenji',city:'线上',mode:'线上',teach:[{s:'日语',lv:'母语'}],want:['摄影','视频剪辑','冥想'],rate:4.8,n:15,time:'周末'},
+ {id:'u3',name:'周一然',city:'上海',mode:'线下',teach:[{s:'游泳',lv:'教练证'},{s:'健身',lv:'熟练'}],want:['吉他'],rate:5.0,n:31,time:'周末上午'},
+ {id:'u4',name:'Maya',city:'杭州',mode:'线上',teach:[{s:'英语口语',lv:'母语'},{s:'雅思写作',lv:'熟练'}],want:['中文','书法'],rate:4.7,n:42,time:'工作日晚'},
+ {id:'u5',name:'陈默',city:'上海',mode:'线上/线下',teach:[{s:'Figma',lv:'精通'},{s:'UI设计',lv:'精通'}],want:['日语','Python'],rate:4.9,n:18,time:'周末'},
+ {id:'u6',name:'阿蓓',city:'北京',mode:'线上',teach:[{s:'视频剪辑',lv:'精通'},{s:'Premiere',lv:'精通'}],want:['吉他','英语口语'],rate:4.6,n:9,time:'工作日晚'},
+ {id:'u7',name:'王拓',city:'上海',mode:'线下',teach:[{s:'书法',lv:'熟练'},{s:'国画',lv:'入门可教'}],want:['健身','摄影'],rate:4.8,n:12,time:'周末下午'},
+ {id:'u8',name:'Sora',city:'线上',mode:'线上',teach:[{s:'数据分析',lv:'精通'},{s:'Excel',lv:'精通'}],want:['UI设计','Figma'],rate:4.5,n:6,time:'随时'},
+ {id:'u9',name:'许诺',city:'上海',mode:'线上/线下',teach:[{s:'烘焙',lv:'熟练'},{s:'咖啡拉花',lv:'熟练'}],want:['日语','视频剪辑','粤语'],rate:4.9,n:27,time:'工作日下午'},
+ {id:'u10',name:'Leo',city:'深圳',mode:'线上',teach:[{s:'Python',lv:'精通'},{s:'爬虫',lv:'熟练'}],want:['英语口语','吉他'],rate:4.7,n:20,time:'周末'},
+ {id:'u11',name:'老周',city:'上海',mode:'线下',teach:[{s:'泡茶',lv:'评茶员证'},{s:'冥想',lv:'熟练'}],want:['摄影'],rate:4.9,n:17,time:'周末下午'},
+ {id:'u12',name:'阿岩',city:'上海',mode:'线下',teach:[{s:'荒野求生',lv:'户外领队'},{s:'倒立',lv:'熟练'},{s:'杂耍',lv:'入门可教'}],want:['Python','视频剪辑','滑板'],rate:4.8,n:11,time:'周末'},
+ {id:'u13',name:'小鹿',city:'上海',mode:'线上/线下',teach:[{s:'插花',lv:'精通'},{s:'吹口哨',lv:'熟练'}],want:['摄影','日语','尤克里里'],rate:4.9,n:14,time:'工作日晚'},
+ {id:'u14',name:'安安',city:'线上',mode:'线上',teach:[{s:'手语',lv:'有证书'},{s:'魔方',lv:'精通'},{s:'冥想',lv:'入门可教'}],want:['英语口语','Python','魔术'],rate:4.7,n:8,time:'随时'}
 ];
 const SUGGEST=['吉他','摄影','Python','日语','英语口语','视频剪辑','UI设计','Figma','游泳','健身','书法','烘焙','数据分析','乐理','咖啡拉花'];
-const COLORS=['#2647E8','#C77A00','#1E8A5A','#B4401C','#6B3FD0','#0F7C8C','#A3297A','#4C5A70'];
-const DEFAULT_ME={name:'我',city:'上海',mode:'线上/线下',teach:[{s:'摄影',lv:'熟练'},{s:'Python',lv:'熟练'}],want:['吉他','日语'],time:'周末'};
+const COLORS=['#1CB0F6','#FF9600','#58CC02','#FF4B4B','#CE82FF','#2B70C9','#FF86D0','#00CD9C'];
+// 每次打开网页都从这套默认技能卡开始（演示用）
+const DEFAULT_ME={name:'我',city:'上海',mode:'线上/线下',teach:[{s:'摄影',lv:'熟练'},{s:'Python',lv:'熟练'},{s:'英语口语',lv:'熟练'}],want:['吉他','日语','健身'],time:'周末',offT:[],offW:[]};
+const WEEK_GOAL=3;
+// 示例数据：上海本周想学人数多、能教的人少的技能
+const HOT_T=[{s:'尤克里里',learners:92,teachers:14},{s:'粤语',learners:81,teachers:11},{s:'调酒',learners:66,teachers:9},{s:'滑板',learners:58,teachers:12},{s:'魔术',learners:47,teachers:6},{s:'剪纸',learners:33,teachers:5},{s:'编绳',learners:25,teachers:4}];
+// 已有两人、等待第三人的三人行队伍：a 教 b 技能 x
+const TEAMS=[{id:'t1',a:'u11',b:'u2',x:'冥想',ago:'20 分钟前'},{id:'t2',a:'u12',b:'u1',x:'荒野求生',ago:'1 小时前'},{id:'t3',a:'u1',b:'u3',x:'吉他',ago:'3 小时前'},{id:'t4',a:'u2',b:'u5',x:'日语',ago:'昨天'},{id:'t5',a:'u10',b:'u12',x:'Python',ago:'昨天'}];
+// 示例数据：上海本周各技能能教的人数、本周新增学习人数
+const HOT=[{s:'冥想',teachers:63,up:41},{s:'泡茶',teachers:57,up:33},{s:'插花',teachers:48,up:37},{s:'倒立',teachers:42,up:29},{s:'荒野求生',teachers:35,up:44},{s:'吹口哨',teachers:31,up:26},{s:'魔方',teachers:28,up:19},{s:'手语',teachers:24,up:22},{s:'杂耍',teachers:19,up:15}];
 
-function load(k,d){try{const v=localStorage.getItem('ss_'+k);return v?JSON.parse(v):d}catch(e){return d}}
-function save(k,v){try{localStorage.setItem('ss_'+k,JSON.stringify(v))}catch(e){}}
-let me=load('me',structuredClone(DEFAULT_ME));
-let swaps=load('swaps',[]);
-let ledger=load('ledger',[{t:'新人赠送',d:2,at:'注册'}]);
+function load(k,d){try{const v=localStorage.getItem('hlm_'+k);return v?JSON.parse(v):d}catch(e){return d}}
+function save(k,v){try{localStorage.setItem('hlm_'+k,JSON.stringify(v))}catch(e){}}
+const fresh=()=>({me:structuredClone(DEFAULT_ME),swaps:[],ledger:[{t:'新人礼包',d:2,ts:Date.now()}],streak:{n:0,last:null}});
+let me=fresh().me,swaps=load('swaps',[]),ledger=load('ledger',fresh().ledger),streak=load('streak',{n:0,last:null});
 let filter='all';
-const users=SEED_USERS;
-const byId=id=>users.find(u=>u.id===id);
+const users=SEED_USERS,byId=id=>users.find(u=>u.id===id);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const coins=()=>ledger.reduce((a,b)=>a+b.d,0);
 const myTeach=()=>me.teach.map(t=>t.s);
+// 主页可临时关闭某项技能，不参与匹配
+const offT=()=>me.offT||(me.offT=[]),offW=()=>me.offW||(me.offW=[]);
+const actTeach=()=>myTeach().filter(s=>!offT().includes(s));
+const actWant=()=>me.want.filter(s=>!offW().includes(s));
+const dayKey=d=>{d=new Date(d);return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()};
+const weekStart=()=>{const d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()-((d.getDay()+6)%7));return +d};
+const weekDone=()=>ledger.filter(r=>r.lesson&&r.ts>=weekStart()).length;
+const totalTaught=()=>ledger.filter(r=>r.lesson&&r.taught).length;
+
+/* ---------- 图形 ---------- */
+// 原创吉祥物"小会"：一张蓝橙双色的技能券，长了眼睛
+function mascot(mood){const m=mood==='sad'?'<path d="M40 70q8-6 16 0" stroke="#3C3C3C" stroke-width="4" fill="none" stroke-linecap="round"/>':'<path d="M38 66q10 10 20 0" stroke="#3C3C3C" stroke-width="4" fill="#FF4B4B" stroke-linecap="round"/>';
+ return `<svg class="mascot" viewBox="0 0 96 96" aria-hidden="true"><ellipse cx="48" cy="91" rx="30" ry="4" fill="rgba(0,0,0,.08)"/>
+ <path d="M10 20a12 12 0 0 1 12-12h26v78H22a12 12 0 0 1-12-12z" fill="#1CB0F6"/><path d="M48 8h26a12 12 0 0 1 12 12v54a12 12 0 0 1-12 12H48z" fill="#FF9600"/>
+ <path d="M48 10v74" stroke="#fff" stroke-width="3" stroke-dasharray="4 5"/><circle cx="31" cy="42" r="11" fill="#fff"/><circle cx="65" cy="42" r="11" fill="#fff"/>
+ <circle cx="33" cy="44" r="5.5" fill="#3C3C3C"/><circle cx="67" cy="44" r="5.5" fill="#3C3C3C"/><circle cx="35" cy="42" r="1.8" fill="#fff"/><circle cx="69" cy="42" r="1.8" fill="#fff"/>${m}</svg>`}
+const ICON={
+ fire:'<svg viewBox="0 0 24 24"><path d="M12 2c1 4 6 6 6 12a6 6 0 0 1-12 0c0-3 2-5 3-6 0 2 1 3 2 3 0-3 0-6 1-9z" fill="#FF9600"/><path d="M12 13c1 2 3 3 3 5a3 3 0 0 1-6 0c0-2 2-3 3-5z" fill="#FFC800"/></svg>',
+ gem:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#1CB0F6"/><circle cx="12" cy="12" r="7" fill="none" stroke="#fff" stroke-width="2"/><path d="M12 8v4l3 2" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg>',
+ heart:'<svg viewBox="0 0 24 24"><path d="M12 21s-8-5-8-11a4.5 4.5 0 0 1 8-3 4.5 4.5 0 0 1 8 3c0 6-8 11-8 11z" fill="#FF4B4B"/></svg>'
+};
+function ava(u){const c=COLORS[users.indexOf(u)%COLORS.length];return `<div class="ava" style="background:${c}">${esc(u.name[0])}</div>`}
+function ring(score){const r=24,c=2*Math.PI*r,col=score>=80?'var(--green)':score>=60?'var(--blue)':'var(--orange)';
+ return `<div class="ring" title="匹配度"><svg viewBox="0 0 58 58"><circle cx="29" cy="29" r="${r}" stroke="var(--line)" stroke-width="7" fill="none"/><circle cx="29" cy="29" r="${r}" stroke="${col}" stroke-width="7" fill="none" stroke-linecap="round" stroke-dasharray="${c*score/100} ${c}"/></svg><b>${score}</b></div>`}
+function chips(arr,cls,hits=[]){return arr.map(s=>`<span class="chip ${cls}${hits.includes(s)?' hit':''}">${esc(s)}</span>`).join('')}
 
 /* ---------- 匹配算法 ---------- */
 function match(u){
-  const canLearn=u.teach.map(t=>t.s).filter(s=>me.want.includes(s)); // 对方能教我
-  const canTeach=myTeach().filter(s=>u.want.includes(s));           // 我能教对方
+  const canLearn=u.teach.map(t=>t.s).filter(s=>actWant().includes(s));
+  const canTeach=actTeach().filter(s=>u.want.includes(s));
   let score=0;
   if(canLearn.length) score+=45;
   if(canTeach.length) score+=35;
   if(canLearn.length&&canTeach.length) score+=10;
-  if(u.city===me.city||u.mode.includes('线上')&&me.mode.includes('线上')) score+=5;
+  if(u.city===me.city||(u.mode.includes('线上')&&me.mode.includes('线上'))) score+=5;
   if(u.time===me.time) score+=3;
   score+=Math.round((u.rate-4.5)*4);
   const type=canLearn.length&&canTeach.length?'mutual':canLearn.length?'learn':canTeach.length?'teach':'none';
-  return {u,canLearn,canTeach,score:Math.min(99,score),type};
+  return {u,canLearn,canTeach,score:Math.max(0,Math.min(99,score)),type};
 }
-// 三人环：我教 A 某技能，A 教 B，B 教我
 function cycles(){
   const out=[];
-  for(const a of users){
-    const meToA=myTeach().filter(s=>a.want.includes(s));
-    if(!meToA.length) continue;
-    for(const b of users){
-      if(a===b) continue;
+  for(const a of users){const meToA=actTeach().filter(s=>a.want.includes(s));if(!meToA.length)continue;
+    for(const b of users){if(a===b)continue;
       const aToB=a.teach.map(t=>t.s).filter(s=>b.want.includes(s));
-      const bToMe=b.teach.map(t=>t.s).filter(s=>me.want.includes(s));
-      if(aToB.length&&bToMe.length) out.push({a,b,meToA:meToA[0],aToB:aToB[0],bToMe:bToMe[0]});
-    }
-  }
-  return out.slice(0,3);
+      const bToMe=b.teach.map(t=>t.s).filter(s=>actWant().includes(s));
+      if(aToB.length&&bToMe.length) out.push({a,b,meToA:meToA[0],aToB:aToB[0],bToMe:bToMe[0]});}}
+  return out.slice(0,8);
 }
 
-/* ---------- 视图 ---------- */
-const app=document.getElementById('app');
-function ava(u,i){const c=COLORS[(users.indexOf(u)+(i||0))%COLORS.length];return `<div class="ava" style="background:${c}">${esc(u.name[0])}</div>`}
-function chips(arr,cls,hits=[]){return arr.map(s=>`<span class="chip ${cls}${hits.includes(s)?' hit':''}">${esc(s)}</span>`).join('')}
+/* ---------- 右侧栏 ---------- */
+function hotHTML(cls='',lim=2){
+  const L=HOT.slice().sort((a,b)=>b.teachers-a.teachers),T=HOT_T.slice().sort((a,b)=>b.learners-a.learners);
+  const sl=L.slice(0,5),st=T.slice(0,2);
+  const rowL=(h,i)=>{const mine=myTeach().includes(h.s),has=me.want.includes(h.s);
+    return `<div><span class="rk ${i<3?'top':''}">${i+1}</span><div style="min-width:0"><b>${esc(h.s)}</b><div class="meta">${h.teachers} 人能教 · 本周 +${h.up} 人在学</div></div>${mine?'<span class="chip t">我会</span>':has?`<button class="btn sm orange" aria-pressed="true" aria-label="把${esc(h.s)}移出想学" title="点击移出想学" onclick="rmHot('${esc(h.s)}')">✓ 想学</button>`:`<button class="btn ghost sm learnbtn" aria-label="把${esc(h.s)}加到想学" onclick="addHot('${esc(h.s)}')">+ 想学</button>`}</div>`};
+  const rowT=(h,i)=>{const mine=myTeach().includes(h.s);
+    return `<div class="teachrow"><span class="rk">${sl.length+i+1}</span><div style="min-width:0"><b>${esc(h.s)}</b><div class="meta">${h.learners} 人想学 · 能教的只有 ${h.teachers} 人</div></div>${mine?`<button class="btn sm blue" aria-pressed="true" aria-label="把${esc(h.s)}移出能教" title="点击移出能教" onclick="rmHotT('${esc(h.s)}')">✓ 能教</button>`:`<button class="btn ghost sm" aria-label="把${esc(h.s)}加到能教" onclick="addHotT('${esc(h.s)}')">+ 想教</button>`}</div>`};
+  return `<div class="box ${cls}"><h3>上海 本周热门榜</h3>
+   <p class="foot" style="margin:-4px 0 10px">点「+ 想学」，马上帮你找能教的人。</p>
+   <div class="hot">${sl.map(rowL).join('')}${st.map((h,i)=>rowT(h,i)).join('')}</div>
+   </div>`}
+function vHot(){app.innerHTML=`<a class="more" href="#discover" style="align-self:flex-start">← 返回发现</a>
+  <div class="hello">${mascot()}<div class="bubble"><h1>上海本周热门技能</h1><p class="muted">很多人能教你的技能，点「+ 想学」；标着「教」的是很多人想学、但能教的人很少的技能，点「+ 想教」，教它最容易赚时间币。</p></div></div>
+  ${hotHTML('',99)}`}
+function statsHTML(){return `<span class="stat fire" title="连续学习天数">${ICON.fire}${streak.n}</span><button class="stat gem" title="时间币：点击查看如何赚取" aria-label="时间币 ${coins()} 个，点击查看如何赚取" onclick="openCoin()">${ICON.gem}${coins()}</button><span class="stat heart" title="信用分">${ICON.heart}100</span>`}
+function renderRail(){
+  document.getElementById('statsM').innerHTML=statsHTML();
+  const wd=weekDone();
+  document.getElementById('rail').innerHTML=`
+  <div class="stats">${statsHTML()}</div>
+  <div class="box goal"><div class="row" style="justify-content:space-between"><h3 style="margin:0">本周目标</h3><span class="meta">${Math.min(wd,WEEK_GOAL)}/${WEEK_GOAL} 节</span></div>
+   <p class="muted small" style="margin-top:4px">${wd>=WEEK_GOAL?'本周目标已完成，保持下去！':'每周上 3 节课，最容易坚持下来。'}</p>
+   <div class="bar"><i style="width:${Math.min(100,wd/WEEK_GOAL*100)}%"></i></div></div>
+  ${hotHTML()}
+  <div class="box"><h3>为什么叫时间币？</h3><p class="muted small">在这里，吉他老师和 Python 工程师的 1 小时一样值钱。教 1 小时赚 1 币，学 1 小时花 1 币。</p></div>`;
+}
 
+/* ---------- 发现 ---------- */
+const app=document.getElementById('app');
 function vDiscover(){
   const all=users.map(match).filter(m=>m.type!=='none').sort((a,b)=>b.score-a.score);
   const list=all.filter(m=>filter==='all'||m.type===filter);
   const cnt=t=>all.filter(m=>m.type===t).length;
   const cyc=cycles();
-  app.innerHTML=`<div class="stack">
-  <div><div class="eyebrow">技能互换 · 用你会的，换你想学的</div><h1>今天和谁换一节课？</h1>
-  <p class="sub">根据你的「能教」和「想学」自动配对。双方互教不花钱；只想学或只想教时，用时间币结算：教 1 小时得 1 币，学 1 小时花 1 币。</p></div>
-  <div class="ticket">
-    <div class="tl"><div class="lab">我能教</div><div class="chips">${me.teach.map(t=>`<span class="chip t">${esc(t.s)} · ${esc(t.lv)}</span>`).join('')||'<span class="meta">还没有填写</span>'}</div></div>
-    <div class="tr"><div class="lab">我想学</div><div class="chips">${chips(me.want,'l')||'<span class="meta">还没有填写</span>'}</div>
-    <div class="row" style="margin-top:12px"><button class="sm ghost" onclick="location.hash='post'">编辑我的技能卡</button></div></div>
+  app.innerHTML=`
+  <div class="hello">${mascot()}<div class="bubble"><h1>今天和谁换一节课？</h1><p class="muted">找到 ${all.length} 个能和你交换的人，其中 ${cnt('mutual')} 个可以互教互学，不花时间币。</p></div></div>
+  <div class="myskills">
+    <div class="half t"><div class="lab">我能教</div><div class="chips">${me.teach.map(t=>{const off=offT().includes(t.s);return `<button class="chip t pick${off?' off':''}" aria-pressed="${!off}" title="${off?'点击加入匹配':'点击移出匹配'}" onclick="togSkill('t','${esc(t.s)}')">${esc(t.s)} · ${esc(t.lv)}</button>`}).join('')||'<span class="meta">还没填写</span>'}</div></div>
+    <div class="half l"><div class="lab">我想学</div><div class="chips">${me.want.map(w=>{const off=offW().includes(w);return `<button class="chip l pick${off?' off':''}" aria-pressed="${!off}" title="${off?'点击加入匹配':'点击移出匹配'}" onclick="togSkill('l','${esc(w)}')">${esc(w)}</button>`}).join('')||'<span class="meta">还没填写</span>'}</div></div>
   </div>
-  ${cyc.length?`<div class="panel"><div class="row" style="justify-content:space-between"><h3>环形交换推荐</h3><span class="chip g">三人成环 · 没有直接互补也能换</span></div>
-    <p class="note" style="margin:4px 0 12px">很多人的需求并不刚好互补。系统会寻找三人闭环，让每个人都教一项、学一项。</p>
-    <div class="stack" style="gap:10px">${cyc.map((c,i)=>`<div class="row" style="justify-content:space-between"><div class="loop">
-      <span class="node">我</span><span class="arr"><em>${esc(c.meToA)}</em>→</span>
-      <span class="node">${esc(c.a.name)}</span><span class="arr"><em>${esc(c.aToB)}</em>→</span>
-      <span class="node">${esc(c.b.name)}</span><span class="arr"><em>${esc(c.bToMe)}</em>→</span><span class="node">我</span></div>
-      <button class="sm ghost" onclick="openCycle(${i})">发起环形交换</button></div>`).join('')}</div></div>`:''}
-  <div class="row" style="justify-content:space-between">
-    <div class="tabs" role="tablist">
-      ${[['all','全部',all.length],['mutual','双向互换',cnt('mutual')],['learn','我能向 TA 学',cnt('learn')],['teach','TA 想跟我学',cnt('teach')]].map(([k,l,n])=>`<button role="tab" class="${filter===k?'on':''}" onclick="setFilter('${k}')">${l} ${n}</button>`).join('')}
-    </div>
-  </div>
-  ${list.length?`<div class="grid">${list.map(card).join('')}</div>`:`<div class="empty">暂时没有匹配。试试在「发布技能」里多加几项想学的技能。</div>`}
-  </div>`;
+  <p class="meta" style="margin-top:-12px">点击技能可以加入或移出匹配。当前参与匹配：能教 ${actTeach().length}/${me.teach.length} 项，想学 ${actWant().length}/${me.want.length} 项</p>
+  ${trioHTML(2)}
+  ${hotHTML('hotm')}
+  <div class="seg" role="tablist">${[['all','全部',all.length],['mutual','互教互学',cnt('mutual')],['learn','我向 TA 学',cnt('learn')],['teach','TA 跟我学',cnt('teach')]].map(([k,l,n])=>`<button role="tab" aria-selected="${filter===k}" class="${filter===k?'on':''}" onclick="setFilter('${k}')">${l} ${n}</button>`).join('')}</div>
+  ${list.length?`<div class="list">${list.map(card).join('')}</div>`:`<div class="empty">${mascot('sad')}<p>暂时没有匹配。去「我的技能卡」多加几项想学的技能试试。</p></div>`}`;
 }
 function card(m){
   const u=m.u;
-  const why=m.type==='mutual'?`<b>互教互学：</b>TA 教你 ${esc(m.canLearn.join('、'))}，你教 TA ${esc(m.canTeach.join('、'))}，不花时间币`
-    :m.type==='learn'?`<b>单向学习：</b>TA 能教你 ${esc(m.canLearn.join('、'))}，每小时花 1 时间币`
-    :`<b>单向教学：</b>TA 想学你的 ${esc(m.canTeach.join('、'))}，每小时赚 1 时间币`;
+  const why=m.type==='mutual'?`<b>互教互学</b>：TA 教你 ${esc(m.canLearn.join('、'))}，你教 TA ${esc(m.canTeach.join('、'))}，不花时间币`
+    :m.type==='learn'?`<b>向 TA 学</b>：TA 能教你 ${esc(m.canLearn.join('、'))}，每小时花 1 时间币`
+    :`<b>TA 跟你学</b>：TA 想学你的 ${esc(m.canTeach.join('、'))}，每小时赚 1 时间币`;
   const has=swaps.some(s=>s.uid===u.id&&s.status!=='done');
   return `<div class="ucard ${m.type==='mutual'?'mutual':''}">
-    <div class="uhead">${ava(u)}<div><div class="uname">${esc(u.name)} ${m.type==='mutual'?'<span class="chip g">双向匹配</span>':''}</div>
-    <div class="meta">${esc(u.city)} · ${esc(u.mode)} · ${esc(u.time)}</div></div>
-    <div class="score"><b>${m.score}</b><span>匹配度</span></div></div>
+    <div class="uhead">${ava(u)}<div style="min-width:0"><div class="uname">${esc(u.name)}${m.type==='mutual'?'<span class="chip g">互补</span>':''}</div>
+    <div class="meta">${esc(u.city)} · ${esc(u.mode)} · ${esc(u.time)}</div></div>${ring(m.score)}</div>
     <div class="kv"><span>能教</span><div>${u.teach.map(t=>`<span class="chip t${m.canLearn.includes(t.s)?' hit':''}">${esc(t.s)} · ${esc(t.lv)}</span>`).join('')}</div>
     <span>想学</span><div>${chips(u.want,'l',m.canTeach)}</div></div>
     <div class="why">${why}</div>
-    <div class="ufoot"><span class="meta">★ ${u.rate} · ${u.n} 次交换</span>
-    <button class="sm ${has?'ghost':'teach'}" ${has?'disabled':''} onclick="openReq('${u.id}')">${has?'已发起':'约一节试听'}</button></div>
+    <div class="ufoot"><span class="meta">★ ${u.rate} · 已交换 ${u.n} 次</span>
+    <button class="btn sm ${m.type==='teach'?'blue':''}" ${has?'disabled':''} onclick="openReq('${u.id}')">${has?'已发起':'约试听'}</button></div>
   </div>`;
 }
 window.setFilter=k=>{filter=k;vDiscover()};
+let trioTab='join';window.setTrio=k=>{trioTab=k;(location.hash==='#trio'?vTrio:vDiscover)()};
+function trioHTML(lim=99){const cyc=cycles();return `<div class="box"><div class="row" style="justify-content:space-between;margin-bottom:4px"><h3 style="margin:0">三人行</h3><span class="chip g">三人行，必有我师</span></div>
+    <p class="muted small" style="margin-bottom:12px">没有人刚好和你互补？三个人各教一项、各学一项也能换成。</p>
+    <div class="trioseg" role="tablist">${[['join','加入队伍',teamList().filter(t=>t.fit).length],['start','我来发起',cyc.length]].map(([k,l,n])=>`<button role="tab" aria-selected="${trioTab===k}" class="${trioTab===k?'on':''}" onclick="setTrio('${k}')">${l} ${n}</button>`).join('')}</div>
+    ${trioTab==='join'?teamsHTML(lim):cyc.length?`<div class="cyc">${cyc.slice(0,lim).map((c,i)=>`<div class="cycrow"><div class="loop"><span class="node me">我</span><span class="arr"><em>${esc(c.meToA)}</em>→</span><span class="node">${esc(c.a.name)}</span><span class="arr"><em>${esc(c.aToB)}</em>→</span><span class="node">${esc(c.b.name)}</span><span class="arr"><em>${esc(c.bToMe)}</em>→</span><span class="node me">我</span></div>
+    <button class="btn ghost sm" onclick="openCycle(${i})">发起</button></div>`).join('')}</div>`:'<p class="meta">暂时找不到能发起的组合，试试「加入队伍」。</p>'}
+    ${lim<99&&(trioTab==='join'?TEAMS.length:cyc.length)>lim?`<a class="more" href="#trio">更多${trioTab==='join'?'队伍':'组合'} →</a>`:''}
+  </div>`}
+function vTrio(){
+  app.innerHTML=`<a class="more" href="#discover" style="align-self:flex-start">← 返回发现</a>
+  <div class="hello">${mascot()}<div class="bubble"><h1>三人行，必有我师</h1><p class="muted">没有人和你刚好互补时，三个人各教一项、各学一项。加入已经组好的队伍，或者自己发起一个。</p></div></div>
+  ${trioHTML()}`;
+}
+function teamList(){return TEAMS.map(t=>{const a=byId(t.a),b=byId(t.b);
+  const learn=b.teach.map(x=>x.s).filter(x=>actWant().includes(x)),teach=actTeach().filter(x=>a.want.includes(x));
+  const joined=swaps.some(w=>w.team===t.id);
+  return {...t,A:a,B:b,learn,teach,fit:learn.length>0&&teach.length>0,joined}}).sort((p,q)=>(q.fit-p.fit))}
+function teamsHTML(lim=99){const list=teamList().slice(0,lim);
+  return `<div class="cyc">${list.map(t=>`<div class="cycrow team${t.fit?'':' nofit'}"><div style="min-width:0;flex:1">
+    <div class="loop"><span class="node">${esc(t.A.name)}</span><span class="arr"><em>${esc(t.x)}</em>→</span><span class="node">${esc(t.B.name)}</span><span class="arr"><em>${t.fit?esc(t.learn[0]):'?'}</em>→</span><span class="node ${t.fit?'me':'slot'}">${t.fit?'我':'等 1 人'}</span><span class="arr"><em>${t.fit?esc(t.teach[0]):'?'}</em>→</span><span class="node">${esc(t.A.name)}</span></div>
+    <div class="meta" style="margin-top:6px">2/3 人 · ${esc(t.ago)}组队 · ${t.fit?`你可以向${esc(t.B.name)}学${esc(t.learn.join('或'))}，教${esc(t.A.name)}${esc(t.teach.join('或'))}`:`缺一位会${esc(t.A.want.join('或'))}、想学${esc(t.B.teach.map(x=>x.s).join('或'))}的人`}</div></div>
+    ${t.joined?'<span class="chip g">已加入</span>':t.fit?`<button class="btn sm" onclick="openTeam('${t.id}')">加入</button>`:'<span class="chip n">不匹配</span>'}</div>`).join('')}</div>`}
+window.openTeam=id=>{const t=teamList().find(x=>x.id===id);
+  layer.innerHTML=`<div class="scrim" onclick="if(event.target===this)closeL()"><form class="modal" onsubmit="joinTeam(event,'${id}')">
+   <h2>加入三人行</h2><p class="muted">${esc(t.A.name)}和${esc(t.B.name)}已经组队，正在等第三个人。你加入后队伍就齐了，可以直接开课。</p>
+   <div class="loop"><span class="node">${esc(t.A.name)}</span><span class="arr"><em>${esc(t.x)}</em>→</span><span class="node">${esc(t.B.name)}</span><span class="arr"><em id="jL">${esc(t.learn[0])}</em>→</span><span class="node me">我</span><span class="arr"><em id="jT">${esc(t.teach[0])}</em>→</span><span class="node">${esc(t.A.name)}</span></div>
+   <div class="form2"><label class="f">我向${esc(t.B.name)}学<select id="jLearn">${t.learn.map(x=>`<option>${esc(x)}</option>`).join('')}</select></label>
+   <label class="f">我教${esc(t.A.name)}<select id="jTeach">${t.teach.map(x=>`<option>${esc(x)}</option>`).join('')}</select></label></div>
+   <div class="notebox">三个人各教 4 小时、各学 4 小时，时间币不变。</div>
+   <div class="row" style="justify-content:flex-end"><button type="button" class="btn ghost" onclick="closeL()">取消</button><button class="btn">加入队伍</button></div></form></div>`;
+  const u=()=>{document.getElementById('jL').textContent=document.getElementById('jLearn').value;document.getElementById('jT').textContent=document.getElementById('jTeach').value};
+  layer.querySelectorAll('select').forEach(x=>x.onchange=u)};
+window.joinTeam=(e,id)=>{e.preventDefault();const t=teamList().find(x=>x.id===id),l=document.getElementById('jLearn').value,te=document.getElementById('jTeach').value;
+  swaps.unshift({id:Date.now(),uid:t.B.id,teach:'',learn:l,n:4,done:0,mode:'线上',status:'active',rated:0,team:id,cycle:`${t.A.name}教${t.B.name}${t.x}，${t.B.name}教我${l}，我教${t.A.name}${te}`});
+  save('swaps',swaps);closeL();toast('已加入队伍，三人行可以开课了');location.hash='swaps'};
+window.togSkill=(kind,sk)=>{const arr=kind==='t'?offT():offW(),i=arr.indexOf(sk);
+  if(i>=0){arr.splice(i,1);toast(`「${sk}」已加入匹配`)}else{arr.push(sk);toast(`「${sk}」已移出匹配`)}
+  persist();vDiscover()};
 
+/* ---------- 技能卡 ---------- */
 function vPost(){
-  app.innerHTML=`<div class="stack">
-  <div><div class="eyebrow">技能卡</div><h1>发布你能教的和想学的</h1>
-  <p class="sub">技能卡越具体，匹配越准。填写熟练度能帮对方判断你是否适合教 TA。</p></div>
-  <div class="form2">
-    <div class="panel stack" style="gap:12px">
-      <h3 style="color:var(--teach)">我能教</h3>
-      <div class="row" style="flex-wrap:nowrap">
-        <input id="tIn" placeholder="例如：摄影" style="flex:2">
-        <select id="tLv" style="flex:1"><option>入门可教</option><option selected>熟练</option><option>精通</option><option>母语</option><option>有证书</option></select>
-        <button class="teach" onclick="addTeach()">添加</button>
-      </div>
-      <div class="row">${me.teach.map((t,i)=>`<span class="chip t">${esc(t.s)} · ${esc(t.lv)}<button aria-label="删除" onclick="rmTeach(${i})">×</button></span>`).join('')||'<span class="meta">还没有添加</span>'}</div>
-      <div class="suggest">${SUGGEST.filter(s=>!myTeach().includes(s)).slice(0,8).map(s=>`<button onclick="qTeach('${s}')">+ ${s}</button>`).join('')}</div>
-    </div>
-    <div class="panel stack" style="gap:12px">
-      <h3 style="color:var(--learn)">我想学</h3>
-      <div class="row" style="flex-wrap:nowrap"><input id="lIn" placeholder="例如：吉他" style="flex:1"><button onclick="addWant()" style="background:var(--learn);color:#fff">添加</button></div>
-      <div class="row">${me.want.map((s,i)=>`<span class="chip l">${esc(s)}<button aria-label="删除" onclick="rmWant(${i})">×</button></span>`).join('')||'<span class="meta">还没有添加</span>'}</div>
-      <div class="suggest">${SUGGEST.filter(s=>!me.want.includes(s)).slice(0,8).map(s=>`<button onclick="qWant('${s}')">+ ${s}</button>`).join('')}</div>
-    </div>
+  app.innerHTML=`
+  <div class="hello">${mascot()}<div class="bubble"><h1>你会什么？想学什么？</h1><p class="muted">填得越具体，越容易找到合适的人。熟练度能帮对方判断你适不适合教 TA。</p></div></div>
+  <div class="half t stack" style="display:flex;flex-direction:column;gap:12px">
+    <div class="lab">我能教</div>
+    <div class="addrow"><input id="tIn" placeholder="例如：摄影" aria-label="能教的技能"><select id="tLv" aria-label="熟练度"><option>入门可教</option><option selected>熟练</option><option>精通</option><option>母语</option><option>有证书</option></select><button class="btn blue sm" onclick="addTeach()">添加</button></div>
+    <div class="row">${me.teach.map((t,i)=>`<span class="chip t">${esc(t.s)} · ${esc(t.lv)}<button aria-label="删除 ${esc(t.s)}" onclick="rmTeach(${i})">×</button></span>`).join('')||'<span class="meta">还没有添加</span>'}</div>
+    <div class="suggest">${SUGGEST.filter(s=>!myTeach().includes(s)).slice(0,7).map(s=>`<button onclick="qTeach('${s}')">+ ${s}</button>`).join('')}</div>
   </div>
-  <div class="panel form2">
+  <div class="half l" style="display:flex;flex-direction:column;gap:12px">
+    <div class="lab">我想学</div>
+    <div class="addrow"><input id="lIn" placeholder="例如：吉他" aria-label="想学的技能"><button class="btn orange sm" onclick="addWant()">添加</button></div>
+    <div class="row">${me.want.map((s,i)=>`<span class="chip l">${esc(s)}<button aria-label="删除 ${esc(s)}" onclick="rmWant(${i})">×</button></span>`).join('')||'<span class="meta">还没有添加</span>'}</div>
+    <div class="suggest">${SUGGEST.filter(s=>!me.want.includes(s)).slice(0,7).map(s=>`<button onclick="qWant('${s}')">+ ${s}</button>`).join('')}</div>
+  </div>
+  <div class="box form2">
     <label class="f">所在城市<input id="city" value="${esc(me.city)}" onchange="me.city=this.value;persist()"></label>
     <label class="f">上课方式<select id="mode" onchange="me.mode=this.value;persist()">${['线上/线下','线上','线下'].map(o=>`<option ${o===me.mode?'selected':''}>${o}</option>`).join('')}</select></label>
     <label class="f">常空时间<select id="time" onchange="me.time=this.value;persist()">${['工作日晚','周末','周末上午','周末下午','随时'].map(o=>`<option ${o===me.time?'selected':''}>${o}</option>`).join('')}</select></label>
-    <div class="row" style="align-items:flex-end"><button onclick="location.hash='discover'">查看匹配结果 →</button><button class="ghost" onclick="resetAll()">恢复示例数据</button></div>
-  </div></div>`;
-  const ti=document.getElementById('tIn'),li=document.getElementById('lIn');
-  ti.onkeydown=e=>{if(e.key==='Enter')addTeach()};li.onkeydown=e=>{if(e.key==='Enter')addWant()};
+  </div>
+  <div class="row"><button class="btn wide" onclick="location.hash='discover'">查看匹配结果</button></div>
+  <div class="row" style="justify-content:center"><button class="btn ghost sm" onclick="resetAll()">恢复示例数据</button></div>`;
+  document.getElementById('tIn').onkeydown=e=>{if(e.key==='Enter')addTeach()};
+  document.getElementById('lIn').onkeydown=e=>{if(e.key==='Enter')addWant()};
 }
 function persist(){save('me',me)}
 window.addTeach=()=>{const v=document.getElementById('tIn').value.trim();if(!v||myTeach().includes(v))return;me.teach.push({s:v,lv:document.getElementById('tLv').value});persist();vPost();toast('已添加「'+v+'」')};
@@ -317,24 +497,24 @@ window.rmTeach=i=>{me.teach.splice(i,1);persist();vPost()};
 window.addWant=()=>{const v=document.getElementById('lIn').value.trim();if(!v||me.want.includes(v))return;me.want.push(v);persist();vPost();toast('已添加「'+v+'」')};
 window.qWant=s=>{me.want.push(s);persist();vPost()};
 window.rmWant=i=>{me.want.splice(i,1);persist();vPost()};
-window.resetAll=()=>{me=structuredClone(DEFAULT_ME);swaps=[];ledger=[{t:'新人赠送',d:2,at:'注册'}];persist();save('swaps',swaps);save('ledger',ledger);updCoin();vPost();toast('已恢复示例数据')};
+window.resetAll=()=>{const f=fresh();me=f.me;swaps=f.swaps;ledger=f.ledger;streak=f.streak;persist();save('swaps',swaps);save('ledger',ledger);save('streak',streak);renderRail();vPost();toast('已恢复示例数据')};
 
-/* ---------- 交换请求 ---------- */
+/* ---------- 请求 ---------- */
+const layer=document.getElementById('layer');
 window.openReq=uid=>{
-  const m=match(byId(uid));const u=m.u;
-  const learnOpts=m.canLearn, teachOpts=m.canTeach;
+  const m=match(byId(uid)),u=m.u;
   layer.innerHTML=`<div class="scrim" onclick="if(event.target===this)closeL()"><form class="modal" onsubmit="submitReq(event,'${uid}')">
-   <div class="uhead">${ava(u)}<div><h2>约 ${esc(u.name)} 一节试听</h2><div class="meta">首次交换前 15 分钟为免费试听，不合适可直接结束</div></div></div>
-   ${learnOpts.length?`<label class="f">我想向 TA 学<select id="rLearn">${learnOpts.map(s=>`<option>${esc(s)}</option>`).join('')}</select></label>`:''}
-   ${teachOpts.length?`<label class="f">我教 TA<select id="rTeach">${teachOpts.map(s=>`<option>${esc(s)}</option>`).join('')}${learnOpts.length?'<option value="">不教，用时间币支付</option>':''}</select></label>`:''}
-   <div class="form2"><label class="f">计划课时<select id="rN">${[2,4,6,8].map(n=>`<option value="${n}" ${n===4?'selected':''}>${n} 次 × 1 小时</option>`).join('')}</select></label>
+   <div class="uhead">${ava(u)}<div><h2>约 ${esc(u.name)} 试听</h2><div class="meta">第一节课前 15 分钟免费，不合适可以直接结束</div></div></div>
+   ${m.canLearn.length?`<label class="f">我想向 TA 学<select id="rLearn">${m.canLearn.map(s=>`<option>${esc(s)}</option>`).join('')}</select></label>`:''}
+   ${m.canTeach.length?`<label class="f">我教 TA<select id="rTeach">${m.canTeach.map(s=>`<option>${esc(s)}</option>`).join('')}${m.canLearn.length?'<option value="">不教，用时间币支付</option>':''}</select></label>`:''}
+   <div class="form2"><label class="f">计划课时<select id="rN">${[2,4,6,8].map(n=>`<option value="${n}" ${n===4?'selected':''}>${n} 节 × 1 小时</option>`).join('')}</select></label>
    <label class="f">方式<select id="rMode">${u.mode.split('/').map(o=>`<option>${o}</option>`).join('')}</select></label></div>
-   <label class="f">打个招呼<textarea id="rMsg" rows="3">你好 ${esc(u.name)}！我看到你${learnOpts.length?'能教'+esc(learnOpts[0]):'想学'+esc(teachOpts[0])}，${u.time}我都有空，想先约一节试听。</textarea></label>
-   <p class="note" id="rNote"></p>
-   <div class="row" style="justify-content:flex-end"><button type="button" class="ghost" onclick="closeL()">取消</button><button class="teach">发送请求</button></div>
+   <label class="f">打个招呼<textarea id="rMsg" rows="3">你好 ${esc(u.name)}！我看到你${m.canLearn.length?'能教'+esc(m.canLearn[0]):'想学'+esc(m.canTeach[0])}，${esc(u.time)}我都有空，想先约一节试听。</textarea></label>
+   <div class="notebox" id="rNote"></div>
+   <div class="row" style="justify-content:flex-end"><button type="button" class="btn ghost" onclick="closeL()">取消</button><button class="btn">发送</button></div>
   </form></div>`;
   const upd=()=>{const t=document.getElementById('rTeach')?.value,l=document.getElementById('rLearn')?.value;
-    document.getElementById('rNote').textContent=t&&l?'双向互换：每节课你教 1 小时、学 1 小时，时间币不变。':l?`单向学习：每节课花 1 时间币（当前余额 ${coins()}）。`:'单向教学：每节课你赚 1 时间币，可用来学任何人的技能。'};
+    document.getElementById('rNote').textContent=t&&l?'互教互学：每节课你教 1 小时、学 1 小时，时间币不变。':l?`向 TA 学：每节课花 1 时间币（你现在有 ${coins()} 个）。`:'TA 跟你学：每节课你赚 1 时间币，可以用来学任何人的技能。'};
   layer.querySelectorAll('select').forEach(s=>s.onchange=upd);upd();
 };
 window.submitReq=(e,uid)=>{e.preventDefault();
@@ -342,92 +522,124 @@ window.submitReq=(e,uid)=>{e.preventDefault();
   swaps.unshift({id:Date.now(),uid,teach:t,learn:l,n:+document.getElementById('rN').value,done:0,mode:document.getElementById('rMode').value,status:'pending',rated:0});
   save('swaps',swaps);closeL();toast('请求已发送，等待对方确认');location.hash='swaps';
 };
-let cycCache=[];
 window.openCycle=i=>{const c=cycles()[i];
   layer.innerHTML=`<div class="scrim" onclick="if(event.target===this)closeL()"><div class="modal">
-  <h2>发起环形交换</h2><p class="sub">三个人各教一项、各学一项。任何一方确认前，其他人的课程都不会开始。</p>
-  <div class="loop"><span class="node">我</span><span class="arr"><em>${esc(c.meToA)}</em>→</span><span class="node">${esc(c.a.name)}</span><span class="arr"><em>${esc(c.aToB)}</em>→</span><span class="node">${esc(c.b.name)}</span><span class="arr"><em>${esc(c.bToMe)}</em>→</span><span class="node">我</span></div>
-  <p class="note">系统会建一个三人群，统一排课。每人投入和收获都是 4 小时。</p>
-  <div class="row" style="justify-content:flex-end"><button class="ghost" onclick="closeL()">取消</button><button class="teach" onclick="cycGo(${i})">邀请两人加入</button></div></div></div>`};
+  <h2>发起三人行</h2><p class="muted">三个人各教一项、各学一项。三人都确认后才开始排课。</p>
+  <div class="loop"><span class="node me">我</span><span class="arr"><em>${esc(c.meToA)}</em>→</span><span class="node">${esc(c.a.name)}</span><span class="arr"><em>${esc(c.aToB)}</em>→</span><span class="node">${esc(c.b.name)}</span><span class="arr"><em>${esc(c.bToMe)}</em>→</span><span class="node me">我</span></div>
+  <div class="notebox">系统会建一个三人群统一排课。每个人都教 4 小时、学 4 小时，时间币不变。</div>
+  <div class="row" style="justify-content:flex-end"><button class="btn ghost" onclick="closeL()">取消</button><button class="btn" onclick="cycGo(${i})">邀请两人加入</button></div></div></div>`};
 window.cycGo=i=>{const c=cycles()[i];
-  swaps.unshift({id:Date.now(),uid:c.b.id,teach:'',learn:c.bToMe,n:4,done:0,mode:'线上',status:'pending',rated:0,cycle:`我→${c.a.name}（${c.meToA}）→${c.b.name}（${c.aToB}）→我（${c.bToMe}）`});
+  swaps.unshift({id:Date.now(),uid:c.b.id,teach:'',learn:c.bToMe,n:4,done:0,mode:'线上',status:'pending',rated:0,cycle:`我教${c.a.name}${c.meToA}，${c.a.name}教${c.b.name}${c.aToB}，${c.b.name}教我${c.bToMe}`});
   save('swaps',swaps);closeL();toast('已邀请 '+c.a.name+' 和 '+c.b.name);location.hash='swaps'};
 window.closeL=()=>{layer.innerHTML=''};
+window.addHotT=sk=>{if(!myTeach().includes(sk))me.teach.push({s:sk,lv:'熟练'});persist();const n=users.filter(u=>u.want.includes(sk)).length;
+  filter='teach';toast(n?`已加入能教，${n} 位用户想跟你学${sk}`:`已加入能教「${sk}」`);if(location.hash==='#discover'||!location.hash){vDiscover();renderRail()}else location.hash='discover'};
+window.rmHotT=sk=>{me.teach=me.teach.filter(x=>x.s!==sk);me.offT=offT().filter(x=>x!==sk);persist();toast(`已把「${sk}」移出能教`);
+  renderRail();const h=(location.hash||'#discover').slice(1);({discover:vDiscover,trio:vTrio,post:vPost}[h]||(()=>{}))()};
+window.rmHot=sk=>{me.want=me.want.filter(x=>x!==sk);me.offW=offW().filter(x=>x!==sk);persist();toast(`已把「${sk}」移出想学`);
+  renderRail();const h=(location.hash||'#discover').slice(1);({discover:vDiscover,trio:vTrio,post:vPost}[h]||(()=>{}))()};
+window.addHot=sk=>{if(!me.want.includes(sk))me.want.push(sk);persist();const n=users.filter(u=>u.teach.some(t=>t.s===sk)).length;
+  filter='learn';toast(n?`已加入想学，找到 ${n} 位能教你${sk}的人`:`已加入想学「${sk}」`);if(location.hash==='#discover'||!location.hash){vDiscover();renderRail()}else location.hash='discover'};
 
+/* ---------- 时间币说明 ---------- */
+window.openCoin=()=>{
+  const all=users.map(match),c=t=>all.filter(m=>m.type===t).length,bal=coins();
+  const ways=[
+   ['teach','赚','#58CC02','green','赚时间币：教别人','TA 想学你会的技能。你每教 1 小时，赚 1 个时间币。',`${c('teach')} 人想跟你学`,'去教别人'],
+   ['mutual','免','#1CB0F6','blue','免时间币：技能互换','你教 TA 一项，TA 教你一项。互不付费，时间币不变。',`${c('mutual')} 人可以和你互换`,'去互换'],
+   ['learn','花','#FF9600','orange','花时间币：向别人学','TA 会你想学的，但不想学你的技能。每学 1 小时，花 1 个时间币。',`${c('learn')} 人可以教你`,'去学习']
+  ];
+  layer.innerHTML=`<div class="scrim" onclick="if(event.target===this)closeL()"><div class="modal" role="dialog" aria-label="时间币">
+   <div class="coinhead"><div class="big">${ICON.gem}${bal}</div><div><h2>时间币</h2><p class="muted small">所有技能的 1 小时都等价：教 1 小时 = 学 1 小时 = 1 币</p></div></div>
+   ${bal<1?`<div class="toast bad" style="position:static;transform:none;box-shadow:none;max-width:none">时间币用完了，先教别人一节课赚一点，或者找人互换。</div>`:''}
+   <div class="ways">${ways.map(w=>`<div class="way"><div class="tag" style="background:${w[2]}">${w[1]}</div>
+     <div class="txt"><h3>${w[4]}</h3><p class="muted">${w[5]}</p></div>
+     <div class="act"><span class="meta">${w[6]}</span><button class="btn sm ${w[3]==='green'?'':w[3]}" ${w[0]==='learn'&&bal<1?'disabled title="时间币不足"':''} onclick="goFilter('${w[0]}')">${w[7]}</button></div></div>`).join('')}</div>
+   <p class="foot">新用户送 2 个时间币。三人行也不花时间币。</p>
+   <button class="btn ghost" onclick="closeL()">知道了</button>
+  </div></div>`;
+};
+window.goFilter=k=>{filter=k;closeL();if(location.hash==='#discover'||!location.hash)vDiscover();else location.hash='discover';window.scrollTo(0,0)};
+
+/* ---------- 我的交换 ---------- */
 function vSwaps(){
-  const groups=[['pending','待确认'],['active','进行中'],['done','已完成']];
-  app.innerHTML=`<div class="stack">
-  <div><div class="eyebrow">我的交换</div><h1>课程与时间币</h1><p class="sub">每完成一节课，双方打卡确认，时间币自动结算。完成全部课时后互相评价，信用分会显示在技能卡上。</p></div>
-  ${swaps.length?groups.map(([k,l])=>{const arr=swaps.filter(s=>s.status===k);return arr.length?`<div class="stack" style="gap:10px"><h2>${l} · ${arr.length}</h2>${arr.map(swapRow).join('')}</div>`:''}).join(''):`<div class="empty">还没有交换。去 <a href="#discover">发现匹配</a> 约第一节试听吧。</div>`}
-  <div class="panel"><div class="row" style="justify-content:space-between"><h2>时间币明细</h2><span class="coin">余额 ${coins()}</span></div>
+  const groups=[['active','进行中'],['pending','等待确认'],['done','已完成']];
+  app.innerHTML=`
+  <div class="hello">${mascot()}<div class="bubble"><h1>今天的课上了吗？</h1><p class="muted">每上完一节课双方打卡，时间币自动结算，连续学习天数 +1。</p></div></div>
+  ${swaps.length?groups.map(([k,l])=>{const arr=swaps.filter(s=>s.status===k);return arr.length?`<h2>${l} · ${arr.length}</h2><div class="list">${arr.map(swapRow).join('')}</div>`:''}).join('')
+   :`<div class="empty">${mascot('sad')}<p>还没有交换。去 <a href="#discover">发现匹配</a> 约第一节试听吧。</p></div>`}
+  <div class="box"><div class="row" style="justify-content:space-between"><h3 style="margin:0">时间币明细</h3><button class="stat gem" title="点击查看如何赚取" onclick="openCoin()">${ICON.gem}${coins()}</button></div>
   <div class="tblwrap"><table><thead><tr><th>事项</th><th>时间</th><th class="num">变动</th></tr></thead><tbody>
-  ${ledger.slice().reverse().map(r=>`<tr><td>${esc(r.t)}</td><td class="meta">${esc(r.at)}</td><td class="num" style="color:${r.d>=0?'var(--good)':'var(--warn)'}">${r.d>0?'+':''}${r.d}</td></tr>`).join('')}
-  </tbody></table></div></div></div>`;
+  ${ledger.slice().reverse().map(r=>`<tr><td>${esc(r.t)}</td><td class="meta">${new Date(r.ts).toLocaleString('zh-CN',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})}</td><td class="num" style="color:${r.d>0?'var(--green)':r.d<0?'var(--red)':'var(--muted)'}">${r.d>0?'+':''}${r.d}</td></tr>`).join('')}
+  </tbody></table></div></div>`;
 }
 function swapRow(s){
   const u=byId(s.uid);
-  const kind=s.teach&&s.learn?'双向互换':s.learn?'单向学习':'单向教学';
-  const st={pending:['st-pending','待对方确认'],active:['st-active','进行中'],done:['st-done','已完成']}[s.status];
+  const kind=s.cycle?'三人行':s.teach&&s.learn?'互教互学':s.learn?'向 TA 学':'TA 跟我学';
+  const st={pending:['st-pending','等待确认'],active:['st-active','进行中'],done:['st-done','已完成']}[s.status];
   let act='';
-  if(s.status==='pending') act=`<button class="sm" onclick="accept(${s.id})">模拟对方同意</button><button class="sm ghost" onclick="cancelS(${s.id})">撤回</button>`;
-  if(s.status==='active') act=`<button class="sm teach" onclick="checkin(${s.id})">完成一节课</button>`;
-  if(s.status==='done') act=s.rated?`<span class="meta">已评价 ${'★'.repeat(s.rated)}</span>`:`<span class="stars">${[1,2,3,4,5].map(n=>`<button aria-label="${n} 星" onclick="rate(${s.id},${n})">☆</button>`).join('')}</span>`;
-  return `<div class="panel swap"><div style="min-width:0"><div class="row">${ava(u)}<div style="min-width:0"><div class="uname">${esc(u.name)} <span class="status ${st[0]}">${st[1]}</span> <span class="chip n">${kind}</span></div>
-   <div class="meta">${s.cycle?'环形：'+esc(s.cycle):`${s.learn?'我学 '+esc(s.learn):''}${s.teach&&s.learn?' · ':''}${s.teach?'我教 '+esc(s.teach):''}`} · ${esc(s.mode)}</div>
-   <div class="prog"><i style="width:${s.done/s.n*100}%"></i></div><div class="meta">${s.done}/${s.n} 节</div></div></div></div>
-   <div class="row">${act}</div></div>`;
+  if(s.status==='pending') act=`<button class="btn sm" onclick="accept(${s.id})">模拟对方同意</button><button class="btn ghost sm" onclick="cancelS(${s.id})">撤回</button>`;
+  if(s.status==='active') act=`<button class="btn sm" onclick="checkin(${s.id})">完成一节课</button>`;
+  if(s.status==='done') act=s.rated?`<span class="meta">你的评价 ${'★'.repeat(s.rated)}</span>`:`<span class="meta">给 TA 打分</span><span class="stars">${[1,2,3,4,5].map(n=>`<button aria-label="${n} 星" onclick="rate(${s.id},${n})">☆</button>`).join('')}</span>`;
+  return `<div class="ucard swap"><div class="uhead">${ava(u)}<div style="min-width:0"><div class="uname">${esc(u.name)} <span class="status ${st[0]}">${st[1]}</span> <span class="chip n">${kind}</span></div>
+   <div class="meta">${s.cycle?esc(s.cycle):`${s.learn?'我学 '+esc(s.learn):''}${s.teach&&s.learn?' · ':''}${s.teach?'我教 '+esc(s.teach):''}`} · ${esc(s.mode)}</div></div></div>
+   <div class="row" style="flex-wrap:nowrap"><div class="bar" style="flex:1"><i style="width:${s.done/s.n*100}%"></i></div><span class="meta">${s.done}/${s.n}</span></div>
+   <div class="row" style="justify-content:flex-end">${act}</div></div>`;
 }
-const now=()=>new Date().toLocaleString('zh-CN',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});
-window.accept=id=>{const s=swaps.find(x=>x.id===id);s.status='active';save('swaps',swaps);toast(byId(s.uid).name+' 已同意，可以开始上课');vSwaps()};
+window.accept=id=>{const s=swaps.find(x=>x.id===id);s.status='active';save('swaps',swaps);toast(byId(s.uid).name+' 同意了，可以开始上课');vSwaps()};
 window.cancelS=id=>{swaps=swaps.filter(x=>x.id!==id);save('swaps',swaps);vSwaps()};
-window.checkin=id=>{const s=swaps.find(x=>x.id===id),u=byId(s.uid);
-  if(s.learn&&!s.teach&&!s.cycle){if(coins()<1){toast('时间币不足：先去教别人一节课赚币吧');return}ledger.push({t:`向 ${u.name} 学 ${s.learn}`,d:-1,at:now()})}
-  else if(s.teach&&!s.learn){ledger.push({t:`教 ${u.name} ${s.teach}`,d:1,at:now()})}
-  else{ledger.push({t:`与 ${u.name} 互换 ${s.learn||''}${s.teach?'/'+s.teach:''}`,d:0,at:now()})}
-  s.done++;if(s.done>=s.n){s.status='done';toast('全部完成，给对方评价吧')}else toast('已打卡第 '+s.done+' 节');
-  save('swaps',swaps);save('ledger',ledger);updCoin();vSwaps()};
-window.rate=(id,n)=>{const s=swaps.find(x=>x.id===id);s.rated=n;save('swaps',swaps);toast('感谢评价');vSwaps()};
+window.checkin=id=>{const s=swaps.find(x=>x.id===id),u=byId(s.uid),ts=Date.now();
+  if(s.learn&&!s.teach&&!s.cycle){if(coins()<1){toast('时间币不够了，先教别人一节课赚一点吧',true);openCoin();return}ledger.push({t:`向 ${u.name} 学 ${s.learn}`,d:-1,ts,lesson:1})}
+  else if(s.teach&&!s.learn){ledger.push({t:`教 ${u.name} ${s.teach}`,d:1,ts,lesson:1,taught:1})}
+  else{ledger.push({t:s.cycle?`三人行：学 ${s.learn}`:`和 ${u.name} 互换 ${s.learn} / ${s.teach}`,d:0,ts,lesson:1,taught:1})}
+  const today=dayKey(ts),yest=dayKey(ts-864e5);
+  if(streak.last!==today){streak.n=streak.last===yest?streak.n+1:1;streak.last=today}
+  s.done++;
+  if(s.done>=s.n){s.status='done';toast('全部课时完成！给对方打个分吧')}else toast(`第 ${s.done} 节完成，连续学习 ${streak.n} 天`);
+  save('swaps',swaps);save('ledger',ledger);save('streak',streak);renderRail();vSwaps()};
+window.rate=(id,n)=>{const s=swaps.find(x=>x.id===id);s.rated=n;save('swaps',swaps);toast('谢谢你的评价');vSwaps()};
 
+/* ---------- 产品设计 ---------- */
 function vAbout(){
-  app.innerHTML=`<div class="stack" style="gap:28px">
-  <div><div class="eyebrow">产品设计说明</div><h1>换技：用你会的，换你想学的</h1>
-  <p class="sub">面向想学新技能、又有一技之长的年轻人。把「报班」变成「交换」，把「自学」变成「有人陪你学」。</p></div>
-  <section class="stack" style="gap:12px"><h2>用户痛点</h2><div class="pain">
-   <div class="panel"><h3>报班贵</h3><p>吉他、摄影一对一课 200–500 元/小时，尝鲜成本太高。</p></div>
-   <div class="panel"><h3>自学难坚持</h3><p>没有人约时间、没有人反馈，教程收藏了也不看。</p></div>
-   <div class="panel"><h3>会的没处用</h3><p>擅长的技能不够开班，也找不到想学的人。</p></div>
-   <div class="panel"><h3>需求不对称</h3><p>我想学吉他，会吉他的人却不想学我的摄影。直接以物易物很难成交。</p></div>
-  </div></section>
-  <section class="stack" style="gap:12px"><h2>核心流程</h2><div class="flow">
-   <div>填写技能卡：能教 + 想学 + 熟练度</div><div>系统匹配：双向 / 单向 / 三人环</div><div>15 分钟免费试听</div><div>约定课时，每节双方打卡</div><div>时间币结算 + 互评信用</div>
-  </div></section>
-  <section class="stack" style="gap:12px"><h2>关键机制</h2><div class="mech">
-   <div class="panel"><h3>1. 双向匹配度</h3><p>TA 能教我想学的 <code>+45</code>，我能教 TA 想学的 <code>+35</code>，两者都满足再 <code>+10</code>；同城或都可线上、空闲时间一致、评分高都有加分。双向互换的卡片会高亮。</p></div>
-   <div class="panel"><h3>2. 时间币</h3><p>解决需求不对称。教 1 小时得 1 币，学 1 小时花 1 币，所有技能一视同仁，强调「每个人的时间等价」。新用户赠 2 币，降低第一次尝试的门槛。</p></div>
-   <div class="panel"><h3>3. 三人环形交换</h3><p>我教 A，A 教 B，B 教我。系统在图中查找长度为 3 的环，让没有直接互补的人也能成交。</p></div>
-   <div class="panel"><h3>4. 试听 + 打卡 + 互评</h3><p>试听降低踩雷风险；每节课双方确认才结算，防止爽约；评分和交换次数公开在技能卡上，形成信用体系。</p></div>
-  </div></section>
-  <section class="stack" style="gap:12px"><h2>后续迭代</h2><div class="panel"><div class="tblwrap"><table>
-   <thead><tr><th>方向</th><th>功能</th><th>解决什么</th></tr></thead><tbody>
-   <tr><td>坚持</td><td>学习小组、打卡连胜、阶段作品展示</td><td>自学难坚持</td></tr>
-   <tr><td>信任</td><td>技能认证（作品集/证书）、爽约扣信用分</td><td>担心对方水平和态度</td></tr>
-   <tr><td>变现</td><td>时间币可兑换付费课、高级教练开收费课</td><td>擅长者缺少变现渠道</td></tr>
-   <tr><td>社区</td><td>同城技能市集、线下工作坊</td><td>线上交换难建立关系</td></tr>
-   </tbody></table></div></div></section>
-  <p class="note">当前为可交互原型：示例用户为虚构数据，你的技能卡、交换记录和时间币只保存在本浏览器中。</p>
-  </div>`;
+  const steps=[['填写技能卡','能教什么、熟练度、想学什么、空闲时间','#1CB0F6'],['系统匹配','互教互学、单向学习、三人行','#FF9600'],['免费试听','第一节课前 15 分钟，不合适随时结束','#CE82FF'],['上课打卡','每节课双方确认，时间币自动结算','#58CC02'],['互相评价','评分和交换次数公开，形成信用','#FFC800']];
+  app.innerHTML=`
+  <div class="hello">${mascot()}<div class="bubble"><h1>会了吗：用你会的，换你想学的</h1><p class="muted">面向想学新技能、自己也有一技之长的年轻人。把「报班」变成「交换」，把「一个人自学」变成「有人陪你学」。</p></div></div>
+  <h2>用户痛点</h2>
+  <div class="pain">
+   <div class="box"><h3>报班太贵</h3><p class="muted">吉他、摄影一对一 200–500 元/小时，只是想试试也要花不少钱。</p></div>
+   <div class="box"><h3>自学坚持不下去</h3><p class="muted">没人约时间、没人反馈，教程收藏了也不看。</p></div>
+   <div class="box"><h3>会的没地方用</h3><p class="muted">擅长的技能不够开班，也找不到想学的人。</p></div>
+   <div class="box"><h3>需求对不上</h3><p class="muted">我想学吉他，会吉他的人却不想学我的摄影，一对一交换很难成交。</p></div>
+  </div>
+  <h2>核心流程</h2>
+  <div class="steps">${steps.map((s,i)=>`<div class="step"><div class="dot" style="background:${s[2]}">${i+1}</div><div><h3>${s[0]}</h3><p class="muted">${s[1]}</p></div></div>`).join('')}</div>
+  <h2>关键机制</h2>
+  <div class="mech">
+   <div class="box"><h3>匹配度</h3><p class="muted">TA 能教我想学的 <code>+45</code>，我能教 TA 想学的 <code>+35</code>，两者都满足再 <code>+10</code>。同城或都能线上、空闲时间一致、评分高再加分。</p></div>
+   <div class="box"><h3>时间币</h3><p class="muted">解决需求对不上。教 1 小时得 1 币，学 1 小时花 1 币，所有技能的 1 小时等价。新用户送 2 币，降低第一次尝试的门槛。</p></div>
+   <div class="box"><h3>三人行</h3><p class="muted">取自「三人行，必有我师」。我教 A，A 教 B，B 教我。系统在「谁能教谁」的关系图里找三人闭环，让没有直接互补的人也能换成。</p></div>
+   <div class="box"><h3>坚持机制</h3><p class="muted">连续学习天数、每周 3 节课目标、上海本周热门技能榜（一键加入想学，帮你发现更多能学的技能）。借鉴语言学习 App 的游戏化设计，解决「自学难坚持」。</p></div>
+  </div>
+  <h2>后续迭代</h2>
+  <div class="box"><div class="tblwrap"><table><thead><tr><th>方向</th><th>功能</th><th>解决什么</th></tr></thead><tbody>
+   <tr><td>信任</td><td>技能认证（作品集、证书）、爽约扣信用分</td><td>担心对方水平和态度</td></tr>
+   <tr><td>坚持</td><td>学习小组、阶段作品展示、课后小测「会了吗？」</td><td>学了不练、不知道学会没有</td></tr>
+   <tr><td>变现</td><td>时间币兑换付费课、高水平用户开收费课</td><td>擅长的人缺少变现渠道</td></tr>
+   <tr><td>社区</td><td>同城技能市集、线下工作坊</td><td>线上交换很难建立长期关系</td></tr>
+  </tbody></table></div></div>
+  <p class="foot">这是可交互原型。示例用户是虚构的，你的技能卡、交换记录和时间币只保存在当前浏览器里。</p>`;
 }
 
 /* ---------- 路由 ---------- */
-const layer=document.getElementById('layer');
-function updCoin(){document.getElementById('coin').textContent='⏱ '+coins()+' 时间币'}
-let tt;function toast(m){clearTimeout(tt);let el=document.querySelector('.toast');if(!el){el=document.createElement('div');el.className='toast';el.setAttribute('role','status');document.body.appendChild(el)}el.textContent=m;tt=setTimeout(()=>el.remove(),2200)}
+let tt;function toast(m,bad){clearTimeout(tt);document.querySelector('.toast')?.remove();const el=document.createElement('div');el.className='toast'+(bad?' bad':'');el.setAttribute('role','status');el.textContent=m;document.body.appendChild(el);tt=setTimeout(()=>el.remove(),2400)}
 function route(){
   const h=(location.hash||'#discover').slice(1);
-  const v={discover:vDiscover,post:vPost,swaps:vSwaps,about:vAbout}[h]||vDiscover;
-  document.querySelectorAll('#nav a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+(v===vDiscover?'discover':h)));
-  closeL();v();updCoin();window.scrollTo(0,0);
+  const views={discover:vDiscover,post:vPost,swaps:vSwaps,about:vAbout,trio:vTrio,hot:vHot};
+  const key=views[h]?h:'discover';
+  document.querySelectorAll('#nav a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+(key==='trio'||key==='hot'?'discover':key)));
+  closeL();views[key]();renderRail();window.scrollTo(0,0);
 }
 addEventListener('hashchange',route);route();
 </script>
-</body></html>
+</body>
+</html>
