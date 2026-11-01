@@ -54,11 +54,36 @@ p{margin:0}
 .stats{display:flex;gap:6px;justify-content:space-between}
 .stat{display:flex;align-items:center;gap:6px;font-weight:900;padding:6px 10px;border-radius:12px;font-size:16px}
 .stat svg{width:26px;height:26px}
+.statwrap{position:relative;display:inline-flex}
+.pop{position:absolute;top:calc(100% + 10px);z-index:30;width:250px;max-width:calc(100vw - 32px);background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:12px 14px;font-size:14px;box-shadow:0 4px 0 var(--line);text-align:left}
+.pop::before{content:"";position:absolute;top:-9px;width:14px;height:14px;background:var(--surface);border-left:2px solid var(--line);border-top:2px solid var(--line);transform:rotate(45deg)}
+.pop b{font-weight:900;display:block;margin-bottom:6px}
+.prow{display:grid;grid-template-columns:26px 1fr auto;gap:8px;align-items:center;padding:6px 0;border-top:2px solid var(--line);font-weight:700;line-height:1.4}
+.pic svg{width:24px;height:24px;display:block}
+.pd{font-weight:900;font-size:13px;padding:2px 8px;border-radius:8px;white-space:nowrap}
+.pd.up{background:var(--green-s);color:var(--green-d)}.pd.down{background:#FFDFE0;color:var(--red-d)}
+.pl .pop{left:0}.pl .pop::before{left:18px}
+.pr .pop{right:0}.pr .pop::before{right:18px}
+.mobilebar .pl .pop{left:auto;right:-60px}.mobilebar .pl .pop::before{left:auto;right:78px}
+.rail{overflow:visible}
 button.stat{font:inherit;font-weight:900;background:none;border:2px solid transparent;cursor:pointer}
 button.stat:hover{background:var(--blue-s);border-color:#84D8FF}
 .coinhead{display:flex;align-items:center;gap:14px}
 .coinhead .big{display:flex;align-items:center;gap:8px;font-size:34px;font-weight:900;color:var(--blue)}
 .coinhead .big svg{width:40px;height:40px}
+.shopentry{font:inherit;display:grid;grid-template-columns:40px 1fr auto;gap:12px;align-items:center;text-align:left;width:100%;cursor:pointer;background:var(--blue-s);border:2px solid #84D8FF;border-bottom-width:5px;border-radius:16px;padding:12px 14px;color:var(--ink)}
+.shopentry .pic svg{width:36px;height:36px}
+.shopentry b{display:block;font-weight:900;font-size:16px}
+.packs{display:flex;flex-direction:column;gap:10px}
+.pack{display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:12px;align-items:center;border:2px solid var(--line);border-bottom-width:5px;border-radius:16px;padding:12px 14px}
+
+.pack.used{opacity:.55}
+.pcoins{display:flex;align-items:center;gap:2px;color:var(--blue);font-size:16px;white-space:nowrap}
+.pcoins svg{width:28px;height:28px;flex:none}
+.pinfo{min-width:0}
+.pname{font-weight:900;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.pd.new{background:var(--orange-s);color:var(--orange-d)}
+.pack .btn{min-width:84px}
 .ways{display:flex;flex-direction:column;gap:12px}
 .way{display:grid;grid-template-columns:48px 1fr;gap:12px;align-items:center;border:2px solid var(--line);border-bottom-width:5px;border-radius:16px;padding:14px}
 .way .tag{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;color:#fff;font-weight:900;font-size:16px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.18)}
@@ -330,7 +355,10 @@ function mascot(mood){const m=mood==='sad'?'<path d="M40 70q8-6 16 0" stroke="#3
 const ICON={
  fire:'<svg viewBox="0 0 24 24"><path d="M12 2c1 4 6 6 6 12a6 6 0 0 1-12 0c0-3 2-5 3-6 0 2 1 3 2 3 0-3 0-6 1-9z" fill="#FF9600"/><path d="M12 13c1 2 3 3 3 5a3 3 0 0 1-6 0c0-2 2-3 3-5z" fill="#FFC800"/></svg>',
  gem:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#1CB0F6"/><circle cx="12" cy="12" r="7" fill="none" stroke="#fff" stroke-width="2"/><path d="M12 8v4l3 2" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg>',
- heart:'<svg viewBox="0 0 24 24"><path d="M12 21s-8-5-8-11a4.5 4.5 0 0 1 8-3 4.5 4.5 0 0 1 8 3c0 6-8 11-8 11z" fill="#FF4B4B"/></svg>'
+ heart:'<svg viewBox="0 0 24 24"><path d="M12 21s-8-5-8-11a4.5 4.5 0 0 1 8-3 4.5 4.5 0 0 1 8 3c0 6-8 11-8 11z" fill="#FF4B4B"/></svg>',
+ fireOff:'<svg viewBox="0 0 24 24"><path d="M12 2c1 4 6 6 6 12a6 6 0 0 1-12 0c0-3 2-5 3-6 0 2 1 3 2 3 0-3 0-6 1-9z" fill="#AFAFAF"/><path d="M12 13c1 2 3 3 3 5a3 3 0 0 1-6 0c0-2 2-3 3-5z" fill="#E5E5E5"/></svg>',
+ heartBroken:'<svg viewBox="0 0 24 24"><path d="M12 21s-8-5-8-11a4.5 4.5 0 0 1 8-3l-1.5 4 3 2-2 3 2 2-1.5 3z" fill="#FF4B4B"/><path d="M13.5 7a4.5 4.5 0 0 1 6.5 3c0 5-5.5 9-7.2 10.4l1.2-3.4-2-2 2-3-3-2z" fill="#FF4B4B" opacity=".55"/></svg>',
+ heartOff:'<svg viewBox="0 0 24 24"><path d="M12 21s-8-5-8-11a4.5 4.5 0 0 1 8-3 4.5 4.5 0 0 1 8 3c0 6-8 11-8 11z" fill="#AFAFAF"/><path d="M12 8v4.5l2.5 1.5" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>'
 };
 function ava(u){const c=COLORS[users.indexOf(u)%COLORS.length];return `<div class="ava" style="background:${c}">${esc(u.name[0])}</div>`}
 function ring(score){const r=24,c=2*Math.PI*r,col=score>=80?'var(--green)':score>=60?'var(--blue)':'var(--orange)';
@@ -376,7 +404,16 @@ function hotHTML(cls='',lim=2){
 function vHot(){app.innerHTML=`<a class="more" href="#discover" style="align-self:flex-start">← 返回发现</a>
   <div class="hello">${mascot()}<div class="bubble"><h1>上海本周热门技能</h1><p class="muted">很多人能教你的技能，点「+ 想学」；标着「教」的是很多人想学、但能教的人很少的技能，点「+ 想教」，教它最容易赚时间币。</p></div></div>
   ${hotHTML('',99)}`}
-function statsHTML(){return `<span class="stat fire" title="连续学习天数">${ICON.fire}${streak.n}</span><button class="stat gem" title="时间币：点击查看如何赚取" aria-label="时间币 ${coins()} 个，点击查看如何赚取" onclick="openCoin()">${ICON.gem}${coins()}</button><span class="stat heart" title="信用分">${ICON.heart}100</span>`}
+const CREDIT_MAX=10;let credit=CREDIT_MAX;
+function streakNow(){const t=dayKey(Date.now()),y=dayKey(Date.now()-864e5);return streak.last===t||streak.last===y?streak.n:0}
+const popRow=(ic,txt,d,cls)=>`<div class="prow"><span class="pic">${ic}</span><span>${txt}</span>${d?`<span class="pd ${cls}">${d}</span>`:''}</div>`;
+function statsHTML(){const sn=streakNow();return `<span class="statwrap pl"><button class="stat fire" aria-expanded="false" aria-label="连续学习 ${sn} 天，点击查看说明" onclick="togPop(event,this)">${sn?ICON.fire:ICON.fireOff}${sn}</button><div class="pop" role="tooltip" hidden><b>连续学习 ${sn} 天</b>
+  ${popRow(ICON.fire,'每天完成一节课','+1','up')}${popRow(ICON.fireOff,'中间断一天','归零','down')}</div></span><button class="stat gem" title="时间币：点击查看如何赚取" aria-label="时间币 ${coins()} 个，点击查看如何赚取" onclick="openCoin()">${ICON.gem}${coins()}</button><span class="statwrap pr"><button class="stat heart" aria-expanded="false" aria-label="信用分 ${credit}/${CREDIT_MAX}，点击查看说明" onclick="togPop(event,this)">${ICON.heart}${credit}</button><div class="pop" role="tooltip" hidden><b>信用分 ${credit}/${CREDIT_MAX}</b>
+  ${popRow(ICON.heart,'按时上课（满分 10）','+1','up')}${popRow(ICON.heartBroken,'爽约一次','−3','down')}${popRow(ICON.heartOff,'归零后账户冷却 10 天，不能发起或接受新的教学','冷却',' down')}${popRow(ICON.heart,'冷却 10 天后自动恢复','回到 1','up')}</div></span>`}
+function closePops(){document.querySelectorAll('.pop').forEach(p=>{p.hidden=true;p.previousElementSibling?.setAttribute('aria-expanded','false')})}
+window.togPop=(e,btn)=>{e.stopPropagation();const p=btn.nextElementSibling,open=p.hidden;closePops();if(open){p.hidden=false;btn.setAttribute('aria-expanded','true')}};
+document.addEventListener('click',e=>{if(!e.target.closest('.pop'))closePops()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closePops()});
 function renderRail(){
   document.getElementById('statsM').innerHTML=statsHTML();
   const wd=weekDone();
@@ -552,6 +589,7 @@ window.openCoin=()=>{
   layer.innerHTML=`<div class="scrim" onclick="if(event.target===this)closeL()"><div class="modal" role="dialog" aria-label="时间币">
    <div class="coinhead"><div class="big">${ICON.gem}${bal}</div><div><h2>时间币</h2><p class="muted small">所有技能的 1 小时都等价：教 1 小时 = 学 1 小时 = 1 币</p></div></div>
    ${bal<1?`<div class="toast bad" style="position:static;transform:none;box-shadow:none;max-width:none">时间币用完了，先教别人一节课赚一点，或者找人互换。</div>`:''}
+   <button class="shopentry" onclick="openShop()"><span class="pic">${ICON.gem}</span><span><b>购买时间币</b><span class="meta">没空教课？直接买，低至 ¥9.99</span></span><span class="pd up">新人特惠</span></button>
    <div class="ways">${ways.map(w=>`<div class="way"><div class="tag" style="background:${w[2]}">${w[1]}</div>
      <div class="txt"><h3>${w[4]}</h3><p class="muted">${w[5]}</p></div>
      <div class="act"><span class="meta">${w[6]}</span><button class="btn sm ${w[3]==='green'?'':w[3]}" ${w[0]==='learn'&&bal<1?'disabled title="时间币不足"':''} onclick="goFilter('${w[0]}')">${w[7]}</button></div></div>`).join('')}</div>
@@ -559,6 +597,21 @@ window.openCoin=()=>{
    <button class="btn ghost" onclick="closeL()">知道了</button>
   </div></div>`;
 };
+const PACKS=[{id:'new',name:'新人礼包',coins:1,price:9.99,tag:'限购 1 次',save:'省 80%'},{id:'base',name:'基础',coins:1,price:50},{id:'small',name:'小包',coins:3,price:130,save:'省 13%'},{id:'big',name:'大包',coins:9,price:360,save:'省 20%',hot:1}];
+let newbieUsed=load('newbie',false);
+window.openShop=()=>{
+  layer.innerHTML=`<div class="scrim" onclick="if(event.target===this)closeL()"><div class="modal" role="dialog" aria-label="购买时间币">
+   <div class="row" style="justify-content:space-between"><h2>购买时间币</h2><button class="btn ghost sm" onclick="openCoin()">← 返回</button></div>
+   <p class="muted small">1 个时间币 = 向任何人学 1 小时。当前余额 ${coins()} 个。</p>
+   <div class="packs">${PACKS.map(p=>{const off=p.id==='new'&&newbieUsed;const per=(p.price/p.coins).toFixed(p.price%p.coins?1:0);
+    return `<div class="pack${off?' used':''}"><div class="pcoins">${ICON.gem}<b>×${p.coins}</b></div>
+     <div class="pinfo"><div class="pname">${p.name}${p.hot?'<span class="pd up">最划算</span>':''}${p.id==='new'?'<span class="pd new">新人</span>':''}</div>
+     <div class="meta">${p.id==='new'?'原价 ¥50':p.coins>1?`约 ¥${per}/个`:'¥50/个'}${p.save?` · ${p.save}`:''}${p.tag?` · ${p.tag}`:''}</div></div>
+     <button class="btn sm ${p.id==='new'?'orange':''}" ${off?'disabled':''} onclick="buyPack('${p.id}')">${off?'已领取':'¥'+p.price}</button></div>`}).join('')}</div>
+   <p class="foot">原型演示：点击购买会直接到账，不会真实扣款。</p></div></div>`};
+window.buyPack=id=>{const p=PACKS.find(x=>x.id===id);if(id==='new'){if(newbieUsed)return;newbieUsed=true;save('newbie',true)}
+  ledger.push({t:`购买${p.name}（¥${p.price}）`,d:p.coins,ts:Date.now()});save('ledger',ledger);renderRail();
+  if(location.hash==='#swaps')vSwaps();toast(`已到账 ${p.coins} 个时间币`);openShop()};
 window.goFilter=k=>{filter=k;closeL();if(location.hash==='#discover'||!location.hash)vDiscover();else location.hash='discover';window.scrollTo(0,0)};
 
 /* ---------- 我的交换 ---------- */
