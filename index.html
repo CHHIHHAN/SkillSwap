@@ -50,7 +50,7 @@ p{margin:0}
 .nav a.on{background:var(--blue-s);border-color:#84D8FF;color:var(--blue)}
 .main{padding:28px 32px 96px;padding-left:max(32px,env(safe-area-inset-left,0px));padding-right:max(32px,env(safe-area-inset-right,0px));min-width:0}
 .mainin{max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
-.rail{padding:24px 24px;padding-right:max(24px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:18px;position:sticky;top:0;height:100vh;overflow:auto}
+.rail{padding:24px 24px;padding-right:max(24px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:18px;align-self:start}
 .stats{display:flex;gap:6px;justify-content:space-between}
 .stat{display:flex;align-items:center;gap:6px;font-weight:900;padding:6px 10px;border-radius:12px;font-size:16px}
 .stat svg{width:26px;height:26px}
@@ -65,7 +65,6 @@ p{margin:0}
 .pl .pop{left:0}.pl .pop::before{left:18px}
 .pr .pop{right:0}.pr .pop::before{right:18px}
 .mobilebar .pl .pop{left:auto;right:-60px}.mobilebar .pl .pop::before{left:auto;right:78px}
-.rail{overflow:visible}
 button.stat{font:inherit;font-weight:900;background:none;border:2px solid transparent;cursor:pointer}
 button.stat:hover{background:var(--blue-s);border-color:#84D8FF}
 .coinhead{display:flex;align-items:center;gap:14px}
